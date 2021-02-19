@@ -493,8 +493,10 @@
 // Tiptap version 2 will improve v-model
 // https://stackoverflow.com/questions/63912152/how-can-i-put-content-from-tiptap-text-editor-into-a-v-model
 
+import ToolbarButton from "./ToolbarButton";
 import EditorContent from "./TiptapContent";
 import { Editor, EditorMenuBar } from "tiptap";
+
 import {
   CodeBlockHighlight,
   Blockquote,
@@ -529,6 +531,7 @@ export default {
   components: {
     EditorContent,
     EditorMenuBar,
+    ToolbarButton
   },
   props: {
     value: [String, Object],
