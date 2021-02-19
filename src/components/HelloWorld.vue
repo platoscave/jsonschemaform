@@ -19,6 +19,7 @@
     <button type="primary" plain @click="validateForm()">Validate</button>
     <button type="primary" plain @click="resetForm()">Reset</button>
     </el-row>
+    <div>Valid: {{ valid }}</div>
 
     <hr />
     <json-schema-form
@@ -32,8 +33,6 @@
     >
     </json-schema-form>
     <hr />
-    <h4>Valid</h4>
-    <div>{{ valid }}</div>
 
     <h4>dataObj</h4>
     <highlight-code lang="json">{{
@@ -292,8 +291,7 @@ export default {
                     title: "Favorite Pet",
                   },
                 },
-        required: ["pet"],
-                
+                //required: ["pet"],
               },
             },
           },
@@ -322,7 +320,7 @@ export default {
                   },
                 },
               },
-        required: ["logEntry"],
+        //required: ["logEntry"],
             },
             attrs: {
               draggable: true,
@@ -365,7 +363,7 @@ pre {
 .json-schema-form {
   max-width: 750px;
 }
-.hljs {
+.hljs .json {
   background: inherit;
 }
 .json-schema-form >>> .control-background {
