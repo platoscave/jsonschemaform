@@ -395,7 +395,14 @@ export default {
   line-height: 20px;
 }
 .editor-content >>> td {
-  background-color: #ffffff0d;
+  background-color: #ffffff08;
+  padding: 5px;
+  border-radius: 4px;
+  min-width: 20px;
+  vertical-align: top;
+}
+.editor-content >>> th {
+  background-color: #ffffff10;
   padding: 5px;
   border-radius: 4px;
   min-width: 20px;
