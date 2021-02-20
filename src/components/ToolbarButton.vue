@@ -3,7 +3,7 @@
     <!-- button must have type="button" since we are in a form See https://github.com/ueberdosis/tiptap/issues/729 -->
     <button
       type="button"
-      class="menubar__button"
+      class="menubar__button h-button"
       :class="{ 'is-active': this.isActive }"
       @click="$emit('buttonClicked')"
     >

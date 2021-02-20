@@ -13,40 +13,18 @@
         See https://github.com/ueberdosis/tiptap/issues/729 -->
         <div class="toolbar">
           <!-- undo -->
-          <toolbar-button 
+          <!-- <toolbar-button 
             popup-text="Undo" 
             icon-name="undo"
             @buttonClicked="false" >
-          </toolbar-button>
-
-          <!-- <el-tooltip content="Undo" placement="top-start" effect="dark">
-            <button type="button" class="menubar__button" @click="commands.undo">
-              <svg class="icon undo">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#undo'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip> -->
+          </toolbar-button> -->
 
           <!-- redo -->
-          <toolbar-button 
+          <!-- <toolbar-button 
             popup-text="Redo" 
             icon-name="redo"
             @buttonClicked="commands.redo" >
-          </toolbar-button>
-
-          <!-- <el-tooltip content="Redo" placement="top-start" effect="dark">
-            <button type="button" class="menubar__button" @click="commands.redo">
-              <svg class="icon redo">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#redo'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip> -->
+          </toolbar-button> -->
 
           <!-- bold -->
           <toolbar-button 
@@ -56,22 +34,6 @@
             @buttonClicked="commands.bold" >
           </toolbar-button>
 
-          <!-- <el-tooltip content="Bold" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.bold() }"
-              @click="commands.bold"
-            >
-              <svg class="icon bold">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#bold'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip> -->
-
           <!-- italic -->
           <toolbar-button 
             popup-text="Italic" 
@@ -79,22 +41,6 @@
             :is-active="isActive.italic()"
             @buttonClicked="commands.italic" >
           </toolbar-button>
-
-          <el-tooltip content="Italic" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.italic() }"
-              @click="commands.italic"
-            >
-              <svg class="icon italic">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#italic'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
 
           <!-- strike -->
           <toolbar-button 
@@ -104,26 +50,6 @@
             @buttonClicked="commands.strike" >
           </toolbar-button>
 
-          <el-tooltip
-            content="Strike Through"
-            placement="top-start"
-            effect="dark"
-          >
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.strike() }"
-              @click="commands.strike"
-            >
-              <svg class="icon strike">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#strike'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <!-- underline -->
           <toolbar-button 
             popup-text="Underline" 
@@ -131,22 +57,6 @@
             :is-active="isActive.underline()"
             @buttonClicked="commands.underline" >
           </toolbar-button>
-
-          <el-tooltip content="Underline" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.underline() }"
-              @click="commands.underline"
-            >
-              <svg class="icon underline">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#underline'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
 
           <!-- code -->
           <toolbar-button 
@@ -156,22 +66,6 @@
             @buttonClicked="commands.code" >
           </toolbar-button>
 
-          <el-tooltip content="Code" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.code() }"
-              @click="commands.code"
-            >
-              <svg class="icon code">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#code'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <!-- paragraph -->
           <toolbar-button 
             popup-text="Add Paragraph" 
@@ -179,26 +73,6 @@
             :is-active="isActive.paragraph()"
             @buttonClicked="commands.paragraph" >
           </toolbar-button>
-
-          <el-tooltip
-            content="Add Paragraph"
-            placement="top-start"
-            effect="dark"
-          >
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.paragraph() }"
-              @click="commands.paragraph"
-            >
-              <svg class="icon paragraph">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#paragraph'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
 
           <!-- header 1 -->
           <toolbar-button 
@@ -208,17 +82,6 @@
             @buttonClicked="commands.heading({ level: 1 })" >
           </toolbar-button>
 
-          <el-tooltip content="Header 1" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 1 }) }"
-              @click="commands.heading({ level: 1 })"
-            >
-              H1
-            </button>
-          </el-tooltip>
-
           <!-- header 2 -->
           <toolbar-button 
             popup-text="Header 2" 
@@ -226,17 +89,6 @@
             :is-active="isActive.heading({ level: 2 }) "
             @buttonClicked="commands.heading({ level: 2 }) " >
           </toolbar-button>
-
-          <el-tooltip content="Header 2" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-              @click="commands.heading({ level: 2 })"
-            >
-              H2
-            </button>
-          </el-tooltip>
 
           <!-- header 3 -->
           <toolbar-button 
@@ -246,17 +98,6 @@
             @buttonClicked="commands.heading({ level: 3 })" >
           </toolbar-button>
 
-          <el-tooltip content="Header 3" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-              @click="commands.heading({ level: 3 })"
-            >
-              H3
-            </button>
-          </el-tooltip>
-
           <!-- ul -->
           <toolbar-button 
             popup-text="Unordered List" 
@@ -264,26 +105,6 @@
             :is-active="isActive.bullet_list()"
             @buttonClicked="commands.ul" >
           </toolbar-button>
-
-          <el-tooltip
-            content="Unordered List"
-            placement="top-start"
-            effect="dark"
-          >
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.bullet_list() }"
-              @click="commands.bullet_list"
-            >
-              <svg class="icon ul">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#ul'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
 
           <!-- ol -->
           <toolbar-button 
@@ -293,73 +114,22 @@
             @buttonClicked="commands.ol" >
           </toolbar-button>
 
-          <el-tooltip
-            content="Ordered List"
-            placement="top-start"
-            effect="dark"
-          >
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.ordered_list() }"
-              @click="commands.ordered_list"
-            >
-              <svg class="icon ol">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#ol'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <!-- quote -->
           <toolbar-button 
             popup-text="Quote" 
-            icon-name="quote"
+            icon-name="quotes"
             :is-active="isActive.blockquote()"
             @buttonClicked="commands.blockquote" >
           </toolbar-button>
 
-          <el-tooltip content="Quote" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.blockquote() }"
-              @click="commands.blockquote"
-            >
-              <svg class="icon quote">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#quotes'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <!-- link -->
-          <toolbar-button 
+          <!-- TODO See https://github.com/ueberdosis/tiptap/blob/main/examples/Components/Routes/Links/index.vue -->
+          <!-- <toolbar-button 
             popup-text="Insert a Link" 
             icon-name="link"
             :is-active="isActive.link()"
             @buttonClicked="commands.link" >
-          </toolbar-button>
-
-          <!-- TODO See https://github.com/ueberdosis/tiptap/blob/main/examples/Components/Routes/Links/index.vue -->
-          <!-- <el-tooltip content="Insert a Link" placement="top-start" effect="dark">
-            <button type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.link() }"
-              @click="commands.link"
-            >
-              <svg class="icon link">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#link'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip> -->
+          </toolbar-button> -->
 
           <!-- image -->
           <toolbar-button 
@@ -369,25 +139,6 @@
             @buttonClicked="commands.image" >
           </toolbar-button>
 
-          <el-tooltip
-            content="Link to Image"
-            placement="top-start"
-            effect="dark"
-          >
-            <button
-              type="button"
-              class="menubar__button"
-              @click="showImagePrompt(commands.image)"
-            >
-              <svg class="icon image">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#image'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <!-- code_block -->
           <toolbar-button 
             popup-text="Code Block" 
@@ -395,22 +146,6 @@
             :is-active="isActive.code()"
             @buttonClicked="commands.code" >
           </toolbar-button>
-
-          <el-tooltip content="Code Block" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              :class="{ 'is-active': isActive.code_block() }"
-              @click="commands.code_block"
-            >
-              <svg class="icon code">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#code'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
 
           <!-- table -->
           <toolbar-button 
@@ -426,240 +161,63 @@
               " >
           </toolbar-button>
 
-          <el-tooltip content="Add Table" placement="top-start" effect="dark">
-            <button
-              type="button"
-              class="menubar__button"
-              @click="
-                commands.createTable({
-                  rowsCount: 3,
-                  colsCount: 3,
-                  withHeaderRow: false,
-                })
-              "
-            >
-              <svg class="icon table">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="'toolbar-symbols.svg#table'"
-                ></use>
-              </svg>
-            </button>
-          </el-tooltip>
-
           <span v-if="isActive.table()">
             <!-- delete_table -->
           <toolbar-button 
             popup-text="Delete Table" 
             icon-name="delete_table"
-            :is-active="isActive.delete_table()"
             @buttonClicked="commands.deleteTable" >
           </toolbar-button>
-
-            <el-tooltip
-              type="button"
-              content="Delete Table"
-              placement="top-start"
-              effect="dark"
-            >
-              <button class="menubar__button" @click="commands.deleteTable">
-                <svg class="icon delete_table">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#delete_table'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- add_col_before -->
           <toolbar-button 
             popup-text="Add Column Before" 
             icon-name="add_col_before"
-            :is-active="isActive.add_col_before()"
             @buttonClicked="commands.addColumnBefore" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Add Column Before"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.addColumnBefore"
-              >
-                <svg class="icon add_col_before">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#add_col_before'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- add_col_after -->
           <toolbar-button 
             popup-text="Add Column After" 
             icon-name="add_col_after"
-            :is-active="isActive.add_col_after()"
             @buttonClicked="commands.addColumnAfter" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Add Column After"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.addColumnAfter"
-              >
-                <svg class="icon add_col_after">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#add_col_after'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- delete_col-->
           <toolbar-button 
             popup-text="Delete Column" 
             icon-name="delete_col"
-            :is-active="isActive.delete_col()"
             @buttonClicked="commands.deleteColumn" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Delete Column"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.deleteColumn"
-              >
-                <svg class="icon delete_col">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#delete_col'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- add_row_before-->
           <toolbar-button 
             popup-text="Add Row Before" 
             icon-name="add_row_before"
-            :is-active="isActive.add_row_before()"
             @buttonClicked="commands.addRowBefore" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Add Row Before"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.addRowBefore"
-              >
-                <svg class="icon add_row_before">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#add_row_before'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- add_row_after-->
           <toolbar-button 
             popup-text="Add Row After" 
             icon-name="add_row_after"
-            :is-active="isActive.add_row_after()"
             @buttonClicked="commands.addRowAfter" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Add Row After"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.addRowAfter"
-              >
-                <svg class="icon add_row_after">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#add_row_after'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- delete_row-->
           <toolbar-button 
             popup-text="Delete Row" 
             icon-name="delete_row"
-            :is-active="isActive.delete_row()"
             @buttonClicked="commands.deleteRow" >
           </toolbar-button>
-
-            <el-tooltip
-              content="Delete Row"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.deleteRow"
-              >
-                <svg class="icon delete_row">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#delete_row'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
 
             <!-- combine_cells-->
           <toolbar-button 
             popup-text="Combine Cells" 
             icon-name="combine_cells"
-            :is-active="isActive.combine_cells()"
             @buttonClicked="commands.toggleCellMerge" >
           </toolbar-button>
 
-            <el-tooltip
-              content="Combine Cells"
-              placement="top-start"
-              effect="dark"
-            >
-              <button
-                type="button"
-                class="menubar__button"
-                @click="commands.toggleCellMerge"
-              >
-                <svg class="icon combine_cells">
-                  <use
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    :xlink:href="'toolbar-symbols.svg#combine_cells'"
-                  ></use>
-                </svg>
-              </button>
-            </el-tooltip>
           </span>
         </div>
       </div>
@@ -812,6 +370,10 @@ export default {
   border-width: 1px;
   padding-top: 4px;
   margin-right: 3px;
+}
+.menubar__button .h-button{
+  padding-top: 0px;
+  padding-left: 0px;
 }
 .menubar__button.is-active {
   background-color: #00adff66;
