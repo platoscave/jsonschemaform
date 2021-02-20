@@ -1,11 +1,11 @@
 <template>
-<div>
-  <el-tooltip content="Bold" placement="top-start" effect="dark">
+  <el-tooltip :content="popupText" placement="top-start" effect="dark">
     <!-- button must have type="button" since we are in a form See https://github.com/ueberdosis/tiptap/issues/729 -->
     <button
       type="button"
       class="menubar__button"
-      :class="{ 'is-active': isActive.bold() }"
+      :class="{ 'is-active': this.isActive }"
+      @click="$emit('buttonClicked')"
     >
       <svg class="icon bold">
         <use
@@ -15,19 +15,21 @@
       </svg>
     </button>
   </el-tooltip>
-  </div>
 </template>
 
 <script>
-import toolbarSymbols from "./toolbar-symbols.svg";
+//import toolbarSymbols from "./toolbar-symbols.svg";
 
 export default {
   name: "toolbar-button",
   components: {
-    toolbarSymbols,
+    //toolbarSymbols,
   },
   props: {
-    isActive: Object,
+    isActive: {
+      type: Boolean,
+      default: false
+    },
     popupText: String,
     iconName: String,
   },
@@ -39,5 +41,19 @@ export default {
   width: 14px;
   height: 14px;
   fill: lightgray;
+}
+.menubar__button {
+  color: lightgray;
+  font-size: 16px;
+  background-color: #ffffff1a;
+  border-radius: 4px;
+  border-color: #00adff66;
+  border-style: solid;
+  border-width: 1px;
+  padding-top: 4px;
+  margin-right: 3px;
+}
+.menubar__button.is-active {
+  background-color: #00adff66;
 }
 </style>
