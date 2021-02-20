@@ -13,6 +13,12 @@
         See https://github.com/ueberdosis/tiptap/issues/729 -->
         <div class="toolbar">
           <!-- undo -->
+          <toolbar-button 
+            popup-text="Undo" 
+            icon-name="undo"
+            @buttonClicked="false" >
+          </toolbar-button>
+
           <!-- <el-tooltip content="Undo" placement="top-start" effect="dark">
             <button type="button" class="menubar__button" @click="commands.undo">
               <svg class="icon undo">
@@ -25,6 +31,12 @@
           </el-tooltip> -->
 
           <!-- redo -->
+          <toolbar-button 
+            popup-text="Redo" 
+            icon-name="redo"
+            @buttonClicked="commands.redo" >
+          </toolbar-button>
+
           <!-- <el-tooltip content="Redo" placement="top-start" effect="dark">
             <button type="button" class="menubar__button" @click="commands.redo">
               <svg class="icon redo">
@@ -37,7 +49,14 @@
           </el-tooltip> -->
 
           <!-- bold -->
-          <el-tooltip content="Bold" placement="top-start" effect="dark">
+          <toolbar-button 
+            popup-text="Bold" 
+            icon-name="bold"
+            :is-active="isActive.bold()"
+            @buttonClicked="commands.bold" >
+          </toolbar-button>
+
+          <!-- <el-tooltip content="Bold" placement="top-start" effect="dark">
             <button
               type="button"
               class="menubar__button"
@@ -51,9 +70,16 @@
                 ></use>
               </svg>
             </button>
-          </el-tooltip>
+          </el-tooltip> -->
 
           <!-- italic -->
+          <toolbar-button 
+            popup-text="Italic" 
+            icon-name="italic"
+            :is-active="isActive.italic()"
+            @buttonClicked="commands.italic" >
+          </toolbar-button>
+
           <el-tooltip content="Italic" placement="top-start" effect="dark">
             <button
               type="button"
@@ -71,6 +97,13 @@
           </el-tooltip>
 
           <!-- strike -->
+          <toolbar-button 
+            popup-text="Strike Through" 
+            icon-name="strike"
+            :is-active="isActive.strike()"
+            @buttonClicked="commands.strike" >
+          </toolbar-button>
+
           <el-tooltip
             content="Strike Through"
             placement="top-start"
@@ -92,6 +125,13 @@
           </el-tooltip>
 
           <!-- underline -->
+          <toolbar-button 
+            popup-text="Underline" 
+            icon-name="underline"
+            :is-active="isActive.underline()"
+            @buttonClicked="commands.underline" >
+          </toolbar-button>
+
           <el-tooltip content="Underline" placement="top-start" effect="dark">
             <button
               type="button"
@@ -109,6 +149,13 @@
           </el-tooltip>
 
           <!-- code -->
+          <toolbar-button 
+            popup-text="Code" 
+            icon-name="code"
+            :is-active="isActive.code()"
+            @buttonClicked="commands.code" >
+          </toolbar-button>
+
           <el-tooltip content="Code" placement="top-start" effect="dark">
             <button
               type="button"
@@ -126,6 +173,13 @@
           </el-tooltip>
 
           <!-- paragraph -->
+          <toolbar-button 
+            popup-text="Add Paragraph" 
+            icon-name="paragraph"
+            :is-active="isActive.paragraph()"
+            @buttonClicked="commands.paragraph" >
+          </toolbar-button>
+
           <el-tooltip
             content="Add Paragraph"
             placement="top-start"
@@ -147,6 +201,13 @@
           </el-tooltip>
 
           <!-- header 1 -->
+          <toolbar-button 
+            popup-text="Header 1" 
+            icon-name="h1"
+            :is-active="isActive.heading({ level: 1 })"
+            @buttonClicked="commands.heading({ level: 1 })" >
+          </toolbar-button>
+
           <el-tooltip content="Header 1" placement="top-start" effect="dark">
             <button
               type="button"
@@ -159,6 +220,13 @@
           </el-tooltip>
 
           <!-- header 2 -->
+          <toolbar-button 
+            popup-text="Header 2" 
+            icon-name="h2"
+            :is-active="isActive.heading({ level: 2 }) "
+            @buttonClicked="commands.heading({ level: 2 }) " >
+          </toolbar-button>
+
           <el-tooltip content="Header 2" placement="top-start" effect="dark">
             <button
               type="button"
@@ -171,6 +239,13 @@
           </el-tooltip>
 
           <!-- header 3 -->
+          <toolbar-button 
+            popup-text="Header 3" 
+            icon-name="h3"
+            :is-active="isActive.heading({ level: 3 })"
+            @buttonClicked="commands.heading({ level: 3 })" >
+          </toolbar-button>
+
           <el-tooltip content="Header 3" placement="top-start" effect="dark">
             <button
               type="button"
@@ -183,6 +258,13 @@
           </el-tooltip>
 
           <!-- ul -->
+          <toolbar-button 
+            popup-text="Unordered List" 
+            icon-name="ul"
+            :is-active="isActive.bullet_list()"
+            @buttonClicked="commands.ul" >
+          </toolbar-button>
+
           <el-tooltip
             content="Unordered List"
             placement="top-start"
@@ -204,6 +286,13 @@
           </el-tooltip>
 
           <!-- ol -->
+          <toolbar-button 
+            popup-text="Ordered List" 
+            icon-name="ol"
+            :is-active="isActive.ordered_list() "
+            @buttonClicked="commands.ol" >
+          </toolbar-button>
+
           <el-tooltip
             content="Ordered List"
             placement="top-start"
@@ -225,6 +314,13 @@
           </el-tooltip>
 
           <!-- quote -->
+          <toolbar-button 
+            popup-text="Quote" 
+            icon-name="quote"
+            :is-active="isActive.blockquote()"
+            @buttonClicked="commands.blockquote" >
+          </toolbar-button>
+
           <el-tooltip content="Quote" placement="top-start" effect="dark">
             <button
               type="button"
@@ -242,6 +338,13 @@
           </el-tooltip>
 
           <!-- link -->
+          <toolbar-button 
+            popup-text="Insert a Link" 
+            icon-name="link"
+            :is-active="isActive.link()"
+            @buttonClicked="commands.link" >
+          </toolbar-button>
+
           <!-- TODO See https://github.com/ueberdosis/tiptap/blob/main/examples/Components/Routes/Links/index.vue -->
           <!-- <el-tooltip content="Insert a Link" placement="top-start" effect="dark">
             <button type="button"
@@ -259,6 +362,13 @@
           </el-tooltip> -->
 
           <!-- image -->
+          <toolbar-button 
+            popup-text="Link to Image" 
+            icon-name="image"
+            :is-active="isActive.image()"
+            @buttonClicked="commands.image" >
+          </toolbar-button>
+
           <el-tooltip
             content="Link to Image"
             placement="top-start"
@@ -279,6 +389,13 @@
           </el-tooltip>
 
           <!-- code_block -->
+          <toolbar-button 
+            popup-text="Code Block" 
+            icon-name="code"
+            :is-active="isActive.code()"
+            @buttonClicked="commands.code" >
+          </toolbar-button>
+
           <el-tooltip content="Code Block" placement="top-start" effect="dark">
             <button
               type="button"
@@ -296,6 +413,19 @@
           </el-tooltip>
 
           <!-- table -->
+          <toolbar-button 
+            popup-text="Add Table" 
+            icon-name="table"
+            :is-active="isActive.table()"
+            @buttonClicked="
+                commands.createTable({
+                  rowsCount: 3,
+                  colsCount: 3,
+                  withHeaderRow: true,
+                })
+              " >
+          </toolbar-button>
+
           <el-tooltip content="Add Table" placement="top-start" effect="dark">
             <button
               type="button"
@@ -319,6 +449,13 @@
 
           <span v-if="isActive.table()">
             <!-- delete_table -->
+          <toolbar-button 
+            popup-text="Delete Table" 
+            icon-name="delete_table"
+            :is-active="isActive.delete_table()"
+            @buttonClicked="commands.deleteTable" >
+          </toolbar-button>
+
             <el-tooltip
               type="button"
               content="Delete Table"
@@ -336,6 +473,13 @@
             </el-tooltip>
 
             <!-- add_col_before -->
+          <toolbar-button 
+            popup-text="Add Column Before" 
+            icon-name="add_col_before"
+            :is-active="isActive.add_col_before()"
+            @buttonClicked="commands.addColumnBefore" >
+          </toolbar-button>
+
             <el-tooltip
               content="Add Column Before"
               placement="top-start"
@@ -356,6 +500,13 @@
             </el-tooltip>
 
             <!-- add_col_after -->
+          <toolbar-button 
+            popup-text="Add Column After" 
+            icon-name="add_col_after"
+            :is-active="isActive.add_col_after()"
+            @buttonClicked="commands.addColumnAfter" >
+          </toolbar-button>
+
             <el-tooltip
               content="Add Column After"
               placement="top-start"
@@ -376,6 +527,13 @@
             </el-tooltip>
 
             <!-- delete_col-->
+          <toolbar-button 
+            popup-text="Delete Column" 
+            icon-name="delete_col"
+            :is-active="isActive.delete_col()"
+            @buttonClicked="commands.deleteColumn" >
+          </toolbar-button>
+
             <el-tooltip
               content="Delete Column"
               placement="top-start"
@@ -396,6 +554,13 @@
             </el-tooltip>
 
             <!-- add_row_before-->
+          <toolbar-button 
+            popup-text="Add Row Before" 
+            icon-name="add_row_before"
+            :is-active="isActive.add_row_before()"
+            @buttonClicked="commands.addRowBefore" >
+          </toolbar-button>
+
             <el-tooltip
               content="Add Row Before"
               placement="top-start"
@@ -416,6 +581,13 @@
             </el-tooltip>
 
             <!-- add_row_after-->
+          <toolbar-button 
+            popup-text="Add Row After" 
+            icon-name="add_row_after"
+            :is-active="isActive.add_row_after()"
+            @buttonClicked="commands.addRowAfter" >
+          </toolbar-button>
+
             <el-tooltip
               content="Add Row After"
               placement="top-start"
@@ -436,6 +608,13 @@
             </el-tooltip>
 
             <!-- delete_row-->
+          <toolbar-button 
+            popup-text="Delete Row" 
+            icon-name="delete_row"
+            :is-active="isActive.delete_row()"
+            @buttonClicked="commands.deleteRow" >
+          </toolbar-button>
+
             <el-tooltip
               content="Delete Row"
               placement="top-start"
@@ -456,6 +635,13 @@
             </el-tooltip>
 
             <!-- combine_cells-->
+          <toolbar-button 
+            popup-text="Combine Cells" 
+            icon-name="combine_cells"
+            :is-active="isActive.combine_cells()"
+            @buttonClicked="commands.toggleCellMerge" >
+          </toolbar-button>
+
             <el-tooltip
               content="Combine Cells"
               placement="top-start"
