@@ -35,12 +35,12 @@
     <hr />
 
     <h4>dataObj</h4>
-    <highlight-code lang="json">{{
+    <highlight-code lang="json" class="highlight-code">{{
       JSON.stringify(dataObj, null, 4)
     }}</highlight-code>
 
     <h4>Schema</h4>
-    <highlight-code lang="json">{{
+    <highlight-code lang="json" class="highlight-code">{{
       JSON.stringify(schema, null, 4)
     }}</highlight-code>
 
@@ -363,7 +363,8 @@ pre {
 .json-schema-form {
   max-width: 750px;
 }
-.hljs .json {
+/* doesnt work */
+.highlight-code >>> code.hljs .json{
   background: inherit;
 }
 .json-schema-form >>> .control-background {
