@@ -1,7 +1,7 @@
 /* eslint-disable no-debugger */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import TiptapWrapper from './TiptapWrapper';
+import TiptapWrapper from './controls/TiptapEditor';
 
 export default {
   name: 'json-schema-form',
