@@ -5,8 +5,9 @@ export default {
     property: Object,
     propertyName: String,
     value: [Number, String, Array, Object, Boolean],
-    readonly: Boolean,
-    required: Boolean
+    formReadOnly: Boolean,
+    required: Array,
+    hashLevel: Number
   },
 
 
@@ -54,7 +55,7 @@ export default {
       else if (property.type === 'boolean') return 'el-checkbox'
 
       // Object
-      else if (property.type === 'object' && property.properties)  return 'ar-sub-form'
+      else if (property.type === 'object' && property.properties)  return 'ar-nested-object'
 
       // Array
       else if (property.type === 'array' && property.items) {

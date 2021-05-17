@@ -1,11 +1,14 @@
 <template>
-  <div v-if="readonly || items.length < 2" class="ar-rodiv">
+  <div
+    v-if="formReadOnly || property.readOnly || items.length < 2"
+    class="ar-rodiv"
+  >
     {{ dataObj ? (dataObj.name ? dataObj.name : dataObj.title) : "" }}
   </div>
   <el-radio-group
     v-else-if="items.length < 5"
-    v-on:update="$emit('input', $event)"
-    v-bind:value="value"
+    @:input="$emit('input', $event)"
+    :value="value"
   >
     <el-radio
       v-for="item in items"
@@ -14,7 +17,7 @@
       :value="item._id"
     ></el-radio>
   </el-radio-group>
-  <el-select v-else v-on:update="$emit('input', $event)" v-bind:value="value">
+  <el-select v-else @:input="$emit('input', $event)" :value="value">
     <el-option
       v-for="item in items"
       :key="item._id"
@@ -33,11 +36,18 @@ export default {
   name: "ar-select",
   mixins: [WidgetMixin],
   props: {
-    property: Object,
     value: String,
-    readonly: Boolean,
-    required: Boolean,
-    hashLevel: Number
+    property: {
+      type: Object,
+      default: () => {},
+    },
+    required: {
+      type: Array,
+      default: () => [],
+    },
+    formReadOnly: Boolean,
+    omitEmptyFields: Boolean,
+    hashLevel: Number,
   },
   data() {
     return {
@@ -61,9 +71,12 @@ export default {
       // Execute the query
       if (this.property && this.property.mongoQuery) {
         //this.$pouch.debug.enable('*')
-        console.log(PoucdbServices)
-        debugger
-        this.items = await PoucdbServices.executeQuery(this.property.mongoQuery, { _id: this.selectedObjId});
+        console.log(PoucdbServices);
+        debugger;
+        this.items = await PoucdbServices.executeQuery(
+          this.property.mongoQuery,
+          { _id: this.selectedObjId }
+        );
       }
     },
   },

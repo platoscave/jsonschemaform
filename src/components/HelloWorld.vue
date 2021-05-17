@@ -22,15 +22,30 @@
     <div>Valid: {{ valid }}</div>
 
     <hr />
+    <!-- Form header with tooltip -->
+    <h3 v-if="schema.title && schema.description">
+      <span>{{ schema.title + " " }}</span>
+      <el-tooltip :content="schema.description">
+        <i class="el-icon-info"></i>
+      </el-tooltip>
+    </h3>
+    <h3 v-else-if="schema.title"></h3>
     <ar-sub-form
       ref="schemaForm"
       class="json-schema-form"
       v-model="dataObj"
-      :schema="schema"
+      :properties="schema.properties"
+      :required="schema.required"
       :form-read-only="readonly"
       :omit-empty-fields="omitEmptyFields"
+      :hash-level="0"
       v-on:change="onChange"
+      
     >
+    <!-- 
+      @:input="value => alert(value)"
+
+     -->
     </ar-sub-form>
     <hr />
 
@@ -59,7 +74,6 @@ export default {
   name: "hello-world",
   components: {
     'json-schema-form': JsonSchemaForm,
-    'ar-sub-form': Form
   },
   data() {
     return {

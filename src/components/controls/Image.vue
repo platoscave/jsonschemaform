@@ -2,26 +2,43 @@
   <div>
     <img class="ar-rodiv" :src="value" />
 
-    <div v-if="property.contentMediaType === 'image/svg+xml'">
-      <tiptap
-        v-on:update="$emit('input', $event)"
-        v-bind:value="svgMarkup"
-      ></tiptap>
+    <div
+      v-if="
+        property.contentMediaType === 'image/svg+xml' &&
+        !(formReadOnly || property.readOnly)
+      "
+    >
+      <ar-tiptap
+        @:input="$emit('input', $event)"
+        :value="svgMarkup"
+      ></ar-tiptap>
     </div>
   </div>
 </template>
 
 <script>
+import Tiptap from "./TiptapEditor";
 export default {
   name: "ar-image",
+  components: {
+    "ar-tiptap": Tiptap,
+  },
   props: {
-    property: Object,
     value: String,
-    readonly: Boolean,
-    required: Boolean,
+    property: {
+      type: Object,
+      default: () => {},
+    },
+    required: {
+      type: Array,
+      default: () => [],
+    },
+    formReadOnly: Boolean,
+    omitEmptyFields: Boolean,
+    hashLevel: Number,
   },
   computed: {
-    svgMarkup: function (svgMarkup) {
+    svgMarkup: function () {
       const escapeHtml = (text) => {
         var map = {
           "&": "&amp;",
@@ -35,9 +52,9 @@ export default {
         });
       };
       if (this.property.contentEncoding === "base64") {
-        return "<pre><code>" + escapeHtml(svgMarkup) + "</code></pre>";
+        return "<pre><code>" + escapeHtml(this.value) + "</code></pre>";
       }
-      return "<pre><code>" + escapeHtml(svgMarkup) + "</code></pre>";
+      return "<pre><code>" + escapeHtml(this.value) + "</code></pre>";
     },
   },
 };

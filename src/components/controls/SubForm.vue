@@ -1,36 +1,38 @@
 <template>
-  <el-form
-    class="json-schema-form"
-    :model="this.value"
-    labelWidth="150px"
-    labelPosition="left"
-    size="small"
-  >
-    <el-form-item
-      v-for="(property, propertyName) in schema.properties"
-      :key="propertyName"
-      :label="property.title"
+    <el-form
+      class="json-schema-form"
+      :model="this.value"
+      labelWidth="150px"
+      labelPosition="left"
+      size="small"
+      @:input="$emit('input', $event)"
     >
-      <!-- Label with tooltip -->
-      <div v-if="property.description" slot="label">
-        <span>{{ property.title + ' '}}</span>
-        <el-tooltip :content="property.description">
-          <i class="el-icon-info"></i>
-        </el-tooltip>
-      </div>
-      <!-- The control -->
-      <template slot-scope="scope">
-        <ar-control-selector
-          :property="property"
-          :propertyName="propertyName"
-          :value="value[propertyName]"
-          :readonly="formReadOnly"
-          :hash-level="hashLevel"
-          @:input="onChange"
-        ></ar-control-selector>
-      </template>
-    </el-form-item>
-  </el-form>
+      <el-form-item
+        v-for="(property, propertyName) in properties"
+        :key="propertyName"
+        :label="property.title"
+      >
+        <!-- Label with tooltip -->
+        <div v-if="property.description" slot="label">
+          <span>{{ property.title + " " }}</span>
+          <el-tooltip :content="property.description">
+            <i class="el-icon-info"></i>
+          </el-tooltip>
+        </div>
+        <!-- The control -->
+        <template slot-scope="scope">
+          <ar-control-selector
+            :property="property"
+            :propertyName="propertyName"
+            :value="value[propertyName] ? value[propertyName] : ''"
+            :required="required"
+            :form-read-only="formReadOnly"
+            :omit-empty-fields="omitEmptyFields"
+            :hash-level="hashLevel"
+          ></ar-control-selector>
+        </template>
+      </el-form-item>
+    </el-form>
 </template>
 
 <script>
@@ -41,6 +43,7 @@ import Enum from "./Enum";
 import Form from "./SubForm";
 import Image from "./Image";
 import Json from "./Json";
+import NestedObject from "./NestedObject";
 import ObjectArray from "./ObjectArray";
 //import Select from './Select';
 import StringArray from "./StringArray";
@@ -55,28 +58,35 @@ export default {
     "ar-sub-form": Form,
     "ar-image": Image,
     "ar-json": Json,
+    "ar-nested-object": NestedObject,
     "ar-object-array": ObjectArray,
     //'ar-select': Select,
     "ar-string-array": StringArray,
     "ar-tiptap": Tiptap,
   },
   props: {
-    value: Object,
-    schema: Object,
+    value: {
+      type: Object,
+      default: () => {}
+    },    
+    properties: {
+      type: Object,
+      default: () => {}
+    },
+    required: {
+      type: Array,
+      default: () =>[]
+    }, 
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
-  },
-  data() {
-    return {
-      hashLevel: 0,
-    };
+    hashLevel: Number
   },
   methods: {
     onChange(newValue) {
-      debugger
-      this.$set(this.value, propertyName, newValue)
-    }
-  }
+      debugger;
+      this.$set(this.value, propertyName, newValue);
+    },
+  },
 };
 </script>
 
@@ -93,6 +103,9 @@ export default {
 }
 .ar-control > input[readonly] {
   border-style: none;
+}
+.Xar-control > .el-input__inner:hover {
+  border-color: #00adff42;
 }
 
 /* Checkbox */

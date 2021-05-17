@@ -1,10 +1,12 @@
 <template>
-  <div v-if="readonly" class="ar-rodiv">{{value.join(', ')}}</div>
+  <div v-if="formReadOnly || property.readOnly" class="ar-rodiv">
+    {{ value.join(", ") }}
+  </div>
 
   <el-radio-group
     v-else-if="property.items.enum.length < 5"
-    v-on:update="$emit('input', $event)"
-    v-bind:value="value"
+    @:input="$emit('input', $event)"
+    :value="value"
   >
     <el-radio
       v-for="item in property.enum"
@@ -13,7 +15,7 @@
       :value="item"
     ></el-radio>
   </el-radio-group>
-  <el-select v-else v-on:update="$emit('input', $event)" v-bind:value="value">
+  <el-select v-else @:input="$emit('input', $event)" :value="value">
     <el-option
       v-for="item in property.items.enum"
       :key="item"
@@ -25,14 +27,24 @@
 </template>
 
 <script>
-
 export default {
   name: "ar-string-array",
   props: {
-    property: Object,
-    value: Array,
-    readonly: Boolean,
-    required: Boolean
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    property: {
+      type: Object,
+      default: () => {},
+    },
+    required: {
+      type: Array,
+      default: () => [],
+    },
+    formReadOnly: Boolean,
+    omitEmptyFields: Boolean,
+    hashLevel: Number,
   },
 };
 </script>

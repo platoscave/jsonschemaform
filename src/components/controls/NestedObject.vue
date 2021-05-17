@@ -1,17 +1,15 @@
 <template>
   <div>
-    <div v-for="(item, idx) in value" :key="idx">
       <ar-sub-form
         class="ar-subform-background"
-        :properties="property.items.properties"
-        :value="item"
-        :required="property.items.required"
+        :properties="property.properties"
+        :value="value"
+        :required="property.required"
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"
         @:input="$emit('input', $event)"
       ></ar-sub-form>
-    </div>
   </div>
 </template>
 
@@ -19,11 +17,11 @@
 //import Form from "./SubForm"; // must be declared globally
 
 export default {
-  name: "ar-object-array",
+  name: "ar-nested-object",
   props: {
     value: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
     property: {
       type: Object,
@@ -36,9 +34,6 @@ export default {
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
     hashLevel: Number,
-  },
-  mounted: function () {
-    debugger;
   },
 };
 </script>

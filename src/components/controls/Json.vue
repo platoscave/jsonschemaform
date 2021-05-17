@@ -1,7 +1,7 @@
 <template>
 
   <highlight-code
-    v-if="readonly"
+    v-if="formReadOnly || property.readOnly"
     class="highlight-code"
     readonly
     lang="json"
@@ -10,8 +10,8 @@
 
   <ar-tiptap
     v-else
-    v-on:update="$emit('input', $event)"
-    v-bind:value="'<pre><code>' + value + '</code></pre>'"
+    @:input="$emit('input', $event)"
+    :value="'<pre><code>' + value + '</code></pre>'"
   ></ar-tiptap>
   
 </template>
@@ -23,12 +23,20 @@ export default {
   name: "ar-json",  
   components: {
     'ar-tiptap': Tiptap,
-  },
+  },  
   props: {
-    property: Object,
     value: String,
-    readonly: Boolean,
-    required: Boolean,
+    property: {
+      type: Object,
+      default: () => {},
+    },
+    required: {
+      type: Array,
+      default: () => [],
+    },
+    formReadOnly: Boolean,
+    omitEmptyFields: Boolean,
+    hashLevel: Number,
   },
 };
 </script>
