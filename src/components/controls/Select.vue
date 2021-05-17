@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="formReadOnly || property.readOnly || items.length < 2"
-    class="ar-rodiv"
+    class="ar-readonly-div"
   >
     {{ dataObj ? (dataObj.name ? dataObj.name : dataObj.title) : "" }}
   </div>

@@ -5,7 +5,6 @@
       labelWidth="150px"
       labelPosition="left"
       size="small"
-      @:input="$emit('input', $event)"
     >
       <el-form-item
         v-for="(property, propertyName) in properties"
@@ -22,14 +21,20 @@
         <!-- The control -->
         <template slot-scope="scope">
           <ar-control-selector
+            class="ar-control"
             :property="property"
             :propertyName="propertyName"
-            :value="value[propertyName] ? value[propertyName] : ''"
+            v-model="value[propertyName]"
             :required="required"
+            :readonly="formReadOnly || property.readOnly"
             :form-read-only="formReadOnly"
             :omit-empty-fields="omitEmptyFields"
             :hash-level="hashLevel"
           ></ar-control-selector>
+          <!-- 
+            @:input="$emit('input', $event)"
+            :value="value[propertyName] ? value[propertyName] : ''"
+           -->
         </template>
       </el-form-item>
     </el-form>
@@ -81,11 +86,17 @@ export default {
     omitEmptyFields: Boolean,
     hashLevel: Number
   },
-  methods: {
-    onChange(newValue) {
-      debugger;
-      this.$set(this.value, propertyName, newValue);
-    },
+  data() {
+    return {
+      value2: 'bb'
+    }
+  },
+  watch: {
+    // immediate: true doesn't work. Too early. Pouch hasn't been initialized yet
+    // Thats why we need both mounted and watch
+    value (newVal, oldVal) {
+      console.log('subForm', newVal, oldVal)
+    }
   },
 };
 </script>
@@ -143,7 +154,7 @@ label.el-checkbox.ar-control {
 }
 
 /* Readonly div */
-.ar-rodiv.ar-control {
+.ar-readonly-div.ar-control {
   background-color: #ffffff08;
   padding-left: 10px;
   padding-right: 10px;

@@ -1,14 +1,7 @@
 export default {
   functional: true,
   name: 'ar-control-selector',
-  props: {
-    property: Object,
-    propertyName: String,
-    value: [Number, String, Array, Object, Boolean],
-    formReadOnly: Boolean,
-    required: Array,
-    hashLevel: Number
-  },
+
 
 
   render(createElement, context) {
@@ -71,13 +64,11 @@ export default {
       // unknown
       return 'ar-json'
     }
-
-    // All controls get ar-control class
-    context.class = 'ar-control'
+    console.log(context)
 
     return createElement(
-      getControlName( context.props.property),
-      context
+      getControlName( context.props.property ),
+      context.data
     )
 
   }

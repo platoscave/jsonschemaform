@@ -1,21 +1,21 @@
 <template>
-  <div v-if="formReadOnly || property.readOnly" class="ar-rodiv">
+  <div v-if="formReadOnly || property.readOnly" class="ar-readonly-div">
     {{ value.join(", ") }}
   </div>
 
-  <el-radio-group
+  <el-checkbox-group 
     v-else-if="property.items.enum.length < 5"
     @:input="$emit('input', $event)"
     :value="value"
   >
-    <el-radio
-      v-for="item in property.enum"
+    <el-checkbox
+      v-for="item in property.items.enum"
       :key="item"
       :label="item"
       :value="item"
-    ></el-radio>
-  </el-radio-group>
-  <el-select v-else @:input="$emit('input', $event)" :value="value">
+    ></el-checkbox>
+  </el-checkbox-group >
+  <el-select v-else @:input="$emit('input', $event)" :value="value" multiple>
     <el-option
       v-for="item in property.items.enum"
       :key="item"

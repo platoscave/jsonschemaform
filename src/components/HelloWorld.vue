@@ -65,21 +65,14 @@
 </template>
 
 <script>
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-escape */
-import JsonSchemaForm from './JsonSchemaForm';
-import Form from './controls/SubForm';
-
 export default {
   name: "hello-world",
-  components: {
-    'json-schema-form': JsonSchemaForm,
-  },
   data() {
     return {
       readonly: false,
       omitEmptyFields: false,
       dataObj: {
+        text: "a",
         textarea: "Through the\ngrapevine.",
         enum: "Promotion",
         multiSelect: ["Promotion", "Weekly News"],
@@ -337,7 +330,7 @@ export default {
                 },
               },
         //required: ["logEntry"],
-            },
+            }, 
             attrs: {
               draggable: true,
             },

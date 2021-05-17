@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="ar-rodiv" :src="value" />
+    <img class="ar-readonly-div" :src="value" />
 
     <div
       v-if="

@@ -1,7 +1,7 @@
 <template>
   <div
-    v-if="formReadOnly || property.readOnly || property.enum.length < 2"
-    class="ar-rodiv"
+    v-if="readonly || property.enum.length < 2"
+    class="ar-readonly-div"
   >
     {{value}}
   </div>
@@ -45,9 +45,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    formReadOnly: Boolean,
-    omitEmptyFields: Boolean,
-    hashLevel: Number,
+    readonly: Boolean,
   },
 };
 </script>
