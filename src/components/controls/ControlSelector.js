@@ -64,11 +64,12 @@ export default {
       // unknown
       return 'ar-json'
     }
-    console.log(context)
+    //console.log(context)
 
     return createElement(
       getControlName( context.props.property ),
-      context.data
+      context.data,
+      context.children
     )
 
   }

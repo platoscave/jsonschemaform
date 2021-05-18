@@ -10,7 +10,7 @@
 
   <ar-tiptap
     v-else
-    @:input="$emit('input', $event)"
+    v-on:input="$emit('input', $event)"
     :value="'<pre><code>' + value + '</code></pre>'"
   ></ar-tiptap>
   

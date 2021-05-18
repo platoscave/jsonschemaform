@@ -7,7 +7,7 @@
   </div>
   <el-radio-group
     v-else-if="items.length < 5"
-    @:input="$emit('input', $event)"
+    v-on:input="$emit('input', $event)"
     :value="value"
   >
     <el-radio
@@ -17,7 +17,7 @@
       :value="item._id"
     ></el-radio>
   </el-radio-group>
-  <el-select v-else @:input="$emit('input', $event)" :value="value">
+  <el-select v-else v-on:input="$emit('input', $event)" :value="value">
     <el-option
       v-for="item in items"
       :key="item._id"

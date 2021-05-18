@@ -8,7 +8,7 @@
 
   <el-radio-group
     v-else-if="property.enum.length < 5"
-    @:input="$emit('input', $event)"
+    v-on:input="$emit('input', $event)"
     :value="value"
   >
     <el-radio
@@ -18,7 +18,7 @@
       :value="item"
     ></el-radio>
   </el-radio-group>
-  <el-select v-else @:input="$emit('input', $event)" :value="value">
+  <el-select v-else v-on:input="$emit('input', $event)" :value="value">
     <el-option
       v-for="item in property.enum"
       :key="item"
@@ -51,4 +51,25 @@ export default {
 </script>
 
 <style scoped>
+
+/* Radiobuttons */
+.el-radio-group {
+  background-color: #ffffff08;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+  border-color: #00adff66;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+/* Select */
+.ar-control >>> .el-input > input {
+  background-color: #ffffff08;
+  border-color: #00adff42;
+  font-size: 16px;
+  height: 30px;
+}
 </style>

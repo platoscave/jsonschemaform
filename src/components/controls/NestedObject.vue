@@ -8,7 +8,7 @@
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"
-        @:input="$emit('input', $event)"
+        v-on:input="$emit('input', $event)"
       ></ar-sub-form>
   </div>
 </template>

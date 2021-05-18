@@ -1,43 +1,57 @@
 <template>
-    <el-form
-      class="json-schema-form"
-      :model="this.value"
-      labelWidth="150px"
-      labelPosition="left"
-      size="small"
+  <el-form
+    class="json-schema-form"
+    :model="this.value"
+    labelWidth="150px"
+    labelPosition="left"
+    size="small"
+  >
+    <!-- :prop is needed for validation rules -->
+    <el-form-item
+      v-for="(property, propertyName) in properties"
+      :key="propertyName"
+      :label="property.title"
+      :prop="propertyName"
     >
-      <el-form-item
-        v-for="(property, propertyName) in properties"
-        :key="propertyName"
-        :label="property.title"
-      >
-        <!-- Label with tooltip -->
-        <div v-if="property.description" slot="label">
-          <span>{{ property.title + " " }}</span>
-          <el-tooltip :content="property.description">
-            <i class="el-icon-info"></i>
-          </el-tooltip>
-        </div>
-        <!-- The control -->
-        <template slot-scope="scope">
-          <ar-control-selector
-            class="ar-control"
-            :property="property"
-            :propertyName="propertyName"
+      <!-- Label with tooltip -->
+      <div v-if="property.description" slot="label">
+        <span>{{ property.title + " " }}</span>
+        <el-tooltip :content="property.description">
+          <i class="el-icon-info"></i>
+        </el-tooltip>
+      </div>
+      <!-- The control -->
+      <template slot-scope="scope">
+        <!-- 
+            readonly is used by standard input elements and in css to remove blue border
+            form-read-only and omit-empty-fields are passed in case we're creating a subForm
+            hash-level is only used if we have a mongoQuery (to get selectedObjectId from hash)
+           -->
+        <ar-control-selector
+          class="ar-control"
+          :property="property"
+          :value="value ? value[propertyName] : null"
+          v-on:input="(newValue) => $set(value, propertyName, newValue)"
+          :propertyName="propertyName"
+          :required="required"
+          :readonly="formReadOnly || property.readOnly"
+          :form-read-only="formReadOnly"
+          :omit-empty-fields="omitEmptyFields"
+          :hash-level="hashLevel"
+          type="textarea"
+          autosize
+        ></ar-control-selector>
+        <!-- 
+            :value="value ? value[propertyName] : null"
+            v-on:input="newValue => $set(value, propertyName, newValue)"
+            
             v-model="value[propertyName]"
-            :required="required"
-            :readonly="formReadOnly || property.readOnly"
-            :form-read-only="formReadOnly"
-            :omit-empty-fields="omitEmptyFields"
-            :hash-level="hashLevel"
-          ></ar-control-selector>
-          <!-- 
-            @:input="$emit('input', $event)"
+            
             :value="value[propertyName] ? value[propertyName] : ''"
            -->
-        </template>
-      </el-form-item>
-    </el-form>
+      </template>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -72,31 +86,27 @@ export default {
   props: {
     value: {
       type: Object,
-      default: () => {}
-    },    
+      default: () => {},
+    },
     properties: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     required: {
       type: Array,
-      default: () =>[]
-    }, 
+      default: () => [],
+    },
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
-    hashLevel: Number
-  },
-  data() {
-    return {
-      value2: 'bb'
-    }
+    hashLevel: Number,
   },
   watch: {
-    // immediate: true doesn't work. Too early. Pouch hasn't been initialized yet
-    // Thats why we need both mounted and watch
-    value (newVal, oldVal) {
-      console.log('subForm', newVal, oldVal)
-    }
+    value: {
+      handler: function (val, oldVal) {
+        console.log(val);
+      },
+      deep: true,
+    },
   },
 };
 </script>
@@ -119,7 +129,7 @@ export default {
   border-color: #00adff42;
 }
 
-/* Checkbox */
+/* Checkbox Boolean*/
 label.el-checkbox.ar-control {
   background-color: #ffffff08;
   padding-left: 10px;
@@ -132,26 +142,7 @@ label.el-checkbox.ar-control {
   line-height: 30px;
 }
 
-/* Radiobuttons */
-.el-radio-group.ar-control {
-  background-color: #ffffff08;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 4px;
-  border-color: #00adff66;
-  border-style: solid;
-  border-width: 1px;
-  font-size: 16px;
-  line-height: 30px;
-}
 
-/* Select */
-.ar-control > .el-input > input {
-  background-color: #ffffff08;
-  border-color: #00adff42;
-  font-size: 16px;
-  height: 30px;
-}
 
 /* Readonly div */
 .ar-readonly-div.ar-control {
@@ -162,6 +153,12 @@ label.el-checkbox.ar-control {
   border-style: none;
   font-size: 16px;
   line-height: 30px;
+}
+
+/* Textarea */
+.el-textarea__inner {
+  background-color: #ffffff08;
+  border-color: #00adff66;
 }
 
 /* info icon */

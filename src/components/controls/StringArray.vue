@@ -3,9 +3,9 @@
     {{ value.join(", ") }}
   </div>
 
-  <el-checkbox-group 
+  <el-checkbox-group
     v-else-if="property.items.enum.length < 5"
-    @:input="$emit('input', $event)"
+    v-on:input="$emit('input', $event)"
     :value="value"
   >
     <el-checkbox
@@ -14,8 +14,8 @@
       :label="item"
       :value="item"
     ></el-checkbox>
-  </el-checkbox-group >
-  <el-select v-else @:input="$emit('input', $event)" :value="value" multiple>
+  </el-checkbox-group>
+  <el-select class="ar-multiple" v-else v-on:input="$emit('input', $event)" :value="value" multiple>
     <el-option
       v-for="item in property.items.enum"
       :key="item"
@@ -50,4 +50,37 @@ export default {
 </script>
 
 <style scoped>
+
+/* checkbox background*/
+.el-checkbox-group {
+  background-color: #ffffff08;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+  border-color: #00adff66;
+  border-style: solid;
+  border-width: 1px;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+/* Select */
+.ar-control >>> .el-input > input {
+  background-color: #ffffff08;
+  border-color: #00adff42;
+  font-size: 16px;
+  height: 30px;
+}
+
+/* Fix multiselect */
+.ar-multiple >>>  .el-tag {
+  background-color: #ffffff08;
+}
+.ar-multiple >>> .el-select__tags-text {
+  color: #00adff;
+}
+.ar-multiple >>> .el-icon-close {
+  background-color: #ff4000a3;
+  color: #eee
+}
 </style>

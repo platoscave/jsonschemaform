@@ -9,7 +9,7 @@
       "
     >
       <ar-tiptap
-        @:input="$emit('input', $event)"
+        v-on:input="$emit('input', $event)"
         :value="svgMarkup"
       ></ar-tiptap>
     </div>

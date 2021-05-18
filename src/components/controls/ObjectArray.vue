@@ -1,17 +1,18 @@
 <template>
   <div>
-    <div v-for="(item, idx) in value" :key="idx">
+    <div v-for="(item, idx) in value" :key="idx" class="ar-subform-background">
       <ar-sub-form
-        class="ar-subform-background"
         :properties="property.items.properties"
         :value="item"
         :required="property.items.required"
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"
-        @:input="$emit('input', $event)"
+        v-on:input="$emit('input', $event)"
       ></ar-sub-form>
+      <i class="el-icon-close" @click="value.splice(idx, 1)"></i>
     </div>
+    <i class="el-icon-plus" @click="value.push({})"></i>
   </div>
 </template>
 
@@ -44,12 +45,31 @@ export default {
 </script>
 
 <style scoped>
-/* subForm backgroung */
+/* subForm background */
 .ar-subform-background {
   background-color: #ffffff08;
   padding: 10px;
   border-radius: 4px;
   border-style: none;
   margin-bottom: 10px;
+  position: relative;
+}
+/* Icons */
+.el-icon-close {
+  position: absolute;
+  margin: 10px;
+  top: 0px;
+  right: 0;
+  background-color: #ff4000a3;
+  color: #eee;
+  z-index: 20;
+  border-radius: 50%;
+}
+.el-icon-plus {
+  margin: 10px;
+  background-color: green;
+  color: #eee;
+  z-index: 20;
+  border-radius: 50%;
 }
 </style>
