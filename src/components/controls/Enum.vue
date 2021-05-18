@@ -52,6 +52,17 @@ export default {
 
 <style scoped>
 
+/* Readonly div */
+.ar-readonly-div {
+  background-color: #ffffff08;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+  border-style: none;
+  font-size: 16px;
+  line-height: 30px;
+}
+
 /* Radiobuttons */
 .el-radio-group {
   background-color: #ffffff08;

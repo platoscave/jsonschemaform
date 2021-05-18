@@ -39,7 +39,7 @@ export default {
     hashLevel: Number,
   },
   mounted: function () {
-    debugger;
+    //debugger;
   },
 };
 </script>
@@ -57,7 +57,7 @@ export default {
 /* Icons */
 .el-icon-close {
   position: absolute;
-  margin: 10px;
+  margin: 3px;
   top: 0px;
   right: 0;
   background-color: #ff4000a3;
@@ -66,7 +66,7 @@ export default {
   border-radius: 50%;
 }
 .el-icon-plus {
-  margin: 10px;
+  margin: 3px;
   background-color: green;
   color: #eee;
   z-index: 20;

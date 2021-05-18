@@ -164,10 +164,16 @@ export default {
           },
           number: {
             type: "number",
-            title: "Number",
+            title: "Number Two Decimal",
             minimum: 10,
             maxmaximum: 100,
-            precision: 2,
+            multipleOf: .01
+          },
+          integer: {
+            type: "integer",
+            title: "Integer",
+            minimum: 10,
+            maxmaximum: 100,
           },
           datetime: {
             type: "string",

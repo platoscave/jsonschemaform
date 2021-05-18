@@ -42,7 +42,10 @@ export default {
       }
 
       // Number
-      else if (property.type === 'number') return 'el-input-number'
+      else if (property.type === 'number') return 'el-input'
+
+      // Integer
+      else if (property.type === 'integer') return 'el-input'
 
       // Boolean
       else if (property.type === 'boolean') return 'el-checkbox'
@@ -64,7 +67,29 @@ export default {
       // unknown
       return 'ar-json'
     }
-    //console.log(context)
+
+    //context.data.attrs.type = 'textarea'
+    //context.data.attrs.autosize = true
+
+    // Merge property attrs with context.data attrs so that control elements can use them
+    let propertyAttrs = context.data.attrs.property.attrs
+    
+    let transMutatedObj = {}
+    if(propertyAttrs) Object.keys(propertyAttrs).forEach( propName => {
+      //if(propName === 'minLength') transMutatedObj.minlength = propertyAttrs.minLength
+      if(propName === 'maxLength') transMutatedObj.maxlength = propertyAttrs.maxLength
+      if(propName === 'minimum') transMutatedObj.min = propertyAttrs.minimum
+      if(propName === 'maximum') transMutatedObj.max = propertyAttrs.maximum
+      if(propName === 'multipleOf') transMutatedObj.step = propertyAttrs.multipleOf
+    })
+
+    console.log(context.data.attrs.propertyName)
+    console.log(transMutatedObj)
+
+
+    let temp = Object.assign(context.data.attrs, propertyAttrs, transMutatedObj)
+    //console.log(temp)
+
 
     return createElement(
       getControlName( context.props.property ),
