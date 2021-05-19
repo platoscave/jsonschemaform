@@ -73,15 +73,16 @@ export default {
 
     // Merge property attrs with context.data attrs so that control elements can use them
     let propertyAttrs = context.data.attrs.property.attrs
-    
+
+    let properties = context.data.attrs.property
     let transMutatedObj = {}
-    if(propertyAttrs) Object.keys(propertyAttrs).forEach( propName => {
+    for(let propName in properties) {
       //if(propName === 'minLength') transMutatedObj.minlength = propertyAttrs.minLength
-      if(propName === 'maxLength') transMutatedObj.maxlength = propertyAttrs.maxLength
-      if(propName === 'minimum') transMutatedObj.min = propertyAttrs.minimum
-      if(propName === 'maximum') transMutatedObj.max = propertyAttrs.maximum
-      if(propName === 'multipleOf') transMutatedObj.step = propertyAttrs.multipleOf
-    })
+      if(propName === 'maxLength') transMutatedObj.maxlength = properties.maxLength
+      if(propName === 'minimum') transMutatedObj.min = properties.minimum
+      if(propName === 'maximum') transMutatedObj.max = properties.maximum
+      if(propName === 'multipleOf') transMutatedObj.step = properties.multipleOf
+    }
 
     console.log(context.data.attrs.propertyName)
     console.log(transMutatedObj)

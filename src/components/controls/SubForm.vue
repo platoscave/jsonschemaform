@@ -1,5 +1,5 @@
 <template>
-  <!-- :rules is needed for validation rules -->
+  <!-- :model and :rules are needed for validation rules -->
   <el-form
     class="json-schema-form"
     :model="this.value"
@@ -8,51 +8,50 @@
     labelPosition="left"
     size="small"
   >
-    <!-- :prop is needed for validation rules -->
-    <el-form-item
-      v-for="(property, propertyName) in properties"
-      :key="propertyName"
-      :label="property.title"
-      :prop="propertyName"
-    >
-      <!-- Label with tooltip -->
-      <span v-if="property.description" slot="label">
-        <span>{{ property.title + " " }}</span>
-        <el-tooltip :content="property.description">
-          <i class="el-icon-info"></i>
-        </el-tooltip>
-      </span>
-      <!-- The control -->
-      <template slot-scope="scope">
-        <!-- 
-            readonly is used by standard input elements to disable input and in css to remove blue border
-            form-read-only and omit-empty-fields are passed in case we're creating a subForm
-            hash-level is only used if we have a mongoQuery (to get selectedObjectId from hash)
+    <div v-for="(property, propertyName) in properties" :key="propertyName">
+
+      <!-- Skip form item if omitEmptyFields is true and value is empty -->
+      <!-- :prop is needed for validation rules -->
+      <el-form-item
+        v-if="!(omitEmptyFields && !value[propertyName])"
+        :label="property.title"
+        :prop="propertyName"
+      >
+
+        <!-- Label with tooltip. If no description is provided then :label from above is used. -->
+        <span v-if="property.description" slot="label">
+          <span>{{ property.title + " " }}</span>
+          <el-tooltip :content="property.description">
+            <i class="el-icon-info"></i>
+          </el-tooltip>
+        </span>
+
+        <!-- The control -->
+        <template>
+          <!-- 
+            ar-control-selector is a functional component that that gets replaced by a control depending on 
+            property type. It also hoists property.attrs to higher level so that they can be used as element attributes.
+            - readonly is used by standard input elements to disable input and in css to remove blue border
+            - form-read-only and omit-empty-fields are passed in case we're creating a subForm
+            - required is used by Select to optionaly add a 'not selected' option
+            - hash-level is used by a Select with a mongoQuery (to get selectedObjectId from hash)
            -->
-        <ar-control-selector
-          class="ar-control"
-          :property="property"
-          :value="value ? value[propertyName] : null"
-          v-on:input="(newValue) => $set(value, propertyName, newValue)"
-          :propertyName="propertyName"
-          :required="required"
-          :readonly="formReadOnly || property.readOnly"
-          :form-read-only="formReadOnly"
-          :omit-empty-fields="omitEmptyFields"
-          :hash-level="hashLevel"
-        ></ar-control-selector>
-        <!-- 
+          <ar-control-selector
+            class="ar-control"
+            :property="property"
             :value="value ? value[propertyName] : null"
-            v-on:input="newValue => $set(value, propertyName, newValue)"
-            
-            v-model="value[propertyName]"
-            
-            :value="value[propertyName] ? value[propertyName] : ''"
-          type="textarea"
-          autosize
-           -->
-      </template>
-    </el-form-item>
+            v-on:input="(newValue) => $set(value, propertyName, newValue)"
+            :readonly="formReadOnly || property.readOnly"
+            :form-read-only="formReadOnly"
+            :omit-empty-fields="omitEmptyFields"
+            :required="requiredArr.includes(propertyName)"
+            :hash-level="hashLevel"
+          ></ar-control-selector>
+        </template>
+
+      </el-form-item>
+
+    </div>
   </el-form>
 </template>
 
@@ -94,7 +93,7 @@ export default {
       type: Object,
       default: () => {},
     },
-    required: {
+    requiredArr: {
       type: Array,
       default: () => [],
     },
@@ -103,45 +102,59 @@ export default {
     hashLevel: Number,
   },
   computed: {
-    
     // Create the validation rules Object
-    validationRules: function ()  {
-      let rulesObj = {}
+    validationRules: function () {
+      let rulesObj = {};
       for (var propertyName in this.properties) {
-        const property = this.properties[propertyName]
+        const property = this.properties[propertyName];
 
         // no rules for readonly
-        if ((this.formReadOnly || property.readonly)) return []
+        if (this.formReadOnly || property.readonly) return [];
 
-        let rulesArr = []
-        if (this.required.includes(propertyName)) {
-          rulesArr.push({ required: true, message: property.title + ' is required.' })
+        let rulesArr = [];
+        if (this.requiredArr.includes(propertyName)) {
+          rulesArr.push({
+            required: true,
+            message: property.title + " is required.",
+          });
         }
 
         if (property.minLength) {
-          rulesArr.push({ min: property.minLength, message: 'Please enter at least ' + property.minLength + ' characters.' })
+          rulesArr.push({
+            min: property.minLength,
+            message:
+              "Please enter at least " + property.minLength + " characters.",
+          });
         }
 
         // email
         if (property.format) {
-          if (property.format === 'email') {
-            rulesArr.push({ type: 'email', message: 'Please enter a valid email address. eg: name@provider.com' })
-          }
-          else if (property.format === 'uri') {
-            rulesArr.push({ type: 'url', message: 'Please enter a valid url. eg: https://provider.com' })
+          if (property.format === "email") {
+            rulesArr.push({
+              type: "email",
+              message:
+                "Please enter a valid email address. eg: name@provider.com",
+            });
+          } else if (property.format === "uri") {
+            rulesArr.push({
+              type: "url",
+              message: "Please enter a valid url. eg: https://provider.com",
+            });
           }
         }
 
         if (property.pattern) {
-          rulesArr.push({ pattern: property.pattern, message: ' Input must comply with: ' + property.pattern })
+          rulesArr.push({
+            pattern: property.pattern,
+            message: " Input must comply with: " + property.pattern,
+          });
         }
 
-        rulesObj[propertyName] = rulesArr
+        rulesObj[propertyName] = rulesArr;
       }
 
-
-      return rulesObj
-    }
+      return rulesObj;
+    },
   },
   watch: {
     value: {
@@ -187,6 +200,9 @@ label.el-checkbox.ar-control {
   border-width: 1px;
   font-size: 16px;
   line-height: 30px;
+}
+label.el-checkbox.ar-control[readonly] {
+  border-style: none;
 }
 
 /* Textarea */

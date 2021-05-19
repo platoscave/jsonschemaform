@@ -4,7 +4,7 @@
         class="ar-subform-background"
         :properties="property.properties"
         :value="value"
-        :required="property.required"
+        :requiredArr="property.required"
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"

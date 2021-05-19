@@ -4,7 +4,7 @@
       <ar-sub-form
         :properties="property.items.properties"
         :value="item"
-        :required="property.items.required"
+        :requiredArr="property.items.required"
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"

@@ -35,7 +35,7 @@
       class="json-schema-form"
       v-model="dataObj"
       :properties="schema.properties"
-      :required="schema.required"
+      :requiredArr="schema.required"
       :form-read-only="readonly"
       :omit-empty-fields="omitEmptyFields"
       :hash-level="0"
