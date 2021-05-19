@@ -2,12 +2,7 @@
   <div>
     <img class="ar-readonly-div" :src="value" />
 
-    <div
-      v-if="
-        property.contentMediaType === 'image/svg+xml' &&
-        !(formReadOnly || property.readOnly)
-      "
-    >
+    <div v-if="property.contentMediaType === 'image/svg+xml' && !readonly">
       <ar-tiptap
         v-on:input="$emit('input', $event)"
         :value="svgMarkup"
@@ -24,18 +19,15 @@ export default {
     "ar-tiptap": Tiptap,
   },
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: '',
+    },
     property: {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
-    formReadOnly: Boolean,
-    omitEmptyFields: Boolean,
-    hashLevel: Number,
+    readonly: Boolean,
   },
   computed: {
     svgMarkup: function () {

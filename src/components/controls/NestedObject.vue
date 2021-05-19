@@ -27,10 +27,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
     hashLevel: Number,
@@ -39,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-/* subForm backgroung */
+/* subForm background */
 .ar-subform-background {
   background-color: #ffffff08;
   padding: 10px;

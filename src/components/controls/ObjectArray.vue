@@ -2,6 +2,7 @@
   <div>
     <div v-for="(item, idx) in value" :key="idx" class="ar-subform-background">
       <ar-sub-form
+        draggable
         :properties="property.items.properties"
         :value="item"
         :requiredArr="property.items.required"
@@ -30,10 +31,7 @@ export default {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
+    additionalItems: Boolean,//TODO
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
     hashLevel: Number,

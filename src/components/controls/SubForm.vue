@@ -9,7 +9,6 @@
     size="small"
   >
     <div v-for="(property, propertyName) in properties" :key="propertyName">
-
       <!-- Skip form item if omitEmptyFields is true and value is empty -->
       <!-- :prop is needed for validation rules -->
       <el-form-item
@@ -17,7 +16,6 @@
         :label="property.title"
         :prop="propertyName"
       >
-
         <!-- Label with tooltip. If no description is provided then :label from above is used. -->
         <span v-if="property.description" slot="label">
           <span>{{ property.title + " " }}</span>
@@ -48,9 +46,7 @@
             :hash-level="hashLevel"
           ></ar-control-selector>
         </template>
-
       </el-form-item>
-
     </div>
   </el-form>
 </template>
@@ -104,14 +100,18 @@ export default {
   computed: {
     // Create the validation rules Object
     validationRules: function () {
+      // no rules for readonly
+      if (this.formReadOnly) return {};
+
       let rulesObj = {};
       for (var propertyName in this.properties) {
         const property = this.properties[propertyName];
 
         // no rules for readonly
-        if (this.formReadOnly || property.readonly) return [];
+        if (property.readonly) continue;
 
         let rulesArr = [];
+
         if (this.requiredArr.includes(propertyName)) {
           rulesArr.push({
             required: true,
@@ -156,9 +156,15 @@ export default {
       return rulesObj;
     },
   },
+  methods: {
+    onInput(newValue, propertyName) {
+      this.$set(this.value, propertyName, newValue)
+
+    },
+  },
   watch: {
     value: {
-      handler: function (val, oldVal) {
+      handler: function (val) {
         console.log(val);
       },
       deep: true,
@@ -167,26 +173,26 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .json-schema-form {
   max-width: 750px;
 }
 /* Input Control */
-.ar-control > input {
+.ar-control >>> input {
   background-color: #ffffff08;
   border-color: #00adff42;
   font-size: 16px;
   height: 30px;
 }
-.ar-control > input[readonly] {
+.ar-control >>> input[readonly] {
   border-style: none;
 }
-.el-input__inner::placeholder {
+.ar-control >>> .el-input__inner::placeholder {
   color: #666;
 }
 /* TODO how do we get rid of hover? */
-.Xar-control > .el-input__inner:hover {
-  border-color: #00adff42;
+.Xar-control >>> .el-input__inner:hover {
+  border-style: none;
 }
 
 /* Checkbox Boolean*/
@@ -195,7 +201,7 @@ label.el-checkbox.ar-control {
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 4px;
-  border-color: #00adff66;
+  border-color: #00adff42;
   border-style: solid;
   border-width: 1px;
   font-size: 16px;
@@ -205,20 +211,46 @@ label.el-checkbox.ar-control[readonly] {
   border-style: none;
 }
 
-/* Textarea */
-.el-textarea__inner {
+/* Select 
+.ar-control >>> .el-input > input {
   background-color: #ffffff08;
-  border-color: #00adff66;
+  border-color: #00adff42;
+  font-size: 16px;
+  height: 30px;
+}*/
+
+/* Textarea */
+.ar-control >>> .el-textarea__inner {
+  background-color: #ffffff08;
+  border-color: #00adff42;
   /* TODO must resize textarea
   font-size: 16px;
   line-height: 30px; */
 }
-.el-textarea__inner[readonly] {
+.ar-control >>> .el-textarea__inner[readonly] {
   border-style: none;
+}
+.ar-control >>> .el-textarea__inner::placeholder {
+  color: #666 !important; 
 }
 
 /* info icon */
 .el-icon-info {
   color: #00adffb3;
+}
+</style>
+<style>
+/* Error succes borders: lighter */
+.el-form-item.is-error .el-input__inner,
+.el-form-item.is-error .el-input__inner:focus,
+.el-form-item.is-error .el-textarea__inner,
+.el-form-item.is-error .el-textarea__inner:focus {
+  border-color: #f56c6c88;
+}
+.el-form-item.is-success .el-input__inner,
+.el-form-item.is-success .el-input__inner:focus,
+.el-form-item.is-success .el-textarea__inner,
+.el-form-item.is-success .el-textarea__inner:focus {
+  border-color: #67c23a88;
 }
 </style>

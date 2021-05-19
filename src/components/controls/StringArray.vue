@@ -1,5 +1,5 @@
 <template>
-  <div v-if="formReadOnly || property.readOnly" class="ar-readonly-div">
+  <div v-if="readonly" class="ar-readonly-div">
     {{ value.join(", ") }}
   </div>
 
@@ -38,13 +38,8 @@ export default {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
-    formReadOnly: Boolean,
-    omitEmptyFields: Boolean,
-    hashLevel: Number,
+    required: Boolean,
+    readonly: Boolean,
   },
 };
 </script>
@@ -60,6 +55,7 @@ export default {
   border-style: none;
   font-size: 16px;
   line-height: 30px;
+  min-height: 30px;
 }
 
 /* checkbox background*/
@@ -68,7 +64,7 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 4px;
-  border-color: #00adff66;
+  border-color: #00adff42;
   border-style: solid;
   border-width: 1px;
   font-size: 16px;

@@ -52,11 +52,12 @@ div.el-tooltip__popper.is-dark {
   font-size: 16px;
   line-height: 28px;
 }
-/* Fix multiselect 
-.el-select .el-tag {
-  background-color: #ffffff08 !important;
+
+/* Error succes borders: lighter */
+.el-form-item.is-error .el-input__inner, .el-form-item.is-error .el-input__inner:focus, .el-form-item.is-error .el-textarea__inner, .el-form-item.is-error .el-textarea__inner:focus {
+    border-color: #f56c6c88;
 }
-.el-select__tags-text {
-  color: #00adff;
-}*/
+.el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
+    border-color: #67c23a88;
+}
 </style>

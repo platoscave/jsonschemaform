@@ -1,8 +1,8 @@
 <template>
 
   <highlight-code
-    v-if="formReadOnly || property.readOnly"
-    class="highlight-code"
+    v-if="readonly"
+    class="highlight-code ar-readonly-div"
     readonly
     lang="json"
   > {{value}}
@@ -25,18 +25,15 @@ export default {
     'ar-tiptap': Tiptap,
   },  
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: '',
+    },
     property: {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
-    formReadOnly: Boolean,
-    omitEmptyFields: Boolean,
-    hashLevel: Number,
+    readonly: Boolean,
   },
 };
 </script>
@@ -52,5 +49,6 @@ export default {
   border-style: none;
   font-size: 16px;
   line-height: 30px;
+  min-height: 30px;
 }
 </style>

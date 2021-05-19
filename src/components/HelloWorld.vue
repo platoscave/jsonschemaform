@@ -370,3 +370,11 @@ export default {
 };
 </script>
 
+<style scoped>
+
+/* info icon */
+.el-icon-info {
+  color: #00adffb3;
+}
+</style>
+

@@ -41,10 +41,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
     readonly: Boolean,
   },
 };
@@ -61,6 +57,7 @@ export default {
   border-style: none;
   font-size: 16px;
   line-height: 30px;
+  min-height: 30px;
 }
 
 /* Radiobuttons */
@@ -69,7 +66,7 @@ export default {
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 4px;
-  border-color: #00adff66;
+  border-color: #00adff42;
   border-style: solid;
   border-width: 1px;
   font-size: 16px;
@@ -77,7 +74,7 @@ export default {
 }
 
 /* Select */
-.ar-control >>> .el-input > input {
+input.el-input__inner {
   background-color: #ffffff08;
   border-color: #00adff42;
   font-size: 16px;

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="formReadOnly || property.readOnly || items.length < 2"
+    v-if="readonly || items.length < 2"
     class="ar-readonly-div"
   >
     {{ dataObj ? (dataObj.name ? dataObj.name : dataObj.title) : "" }}
@@ -36,17 +36,16 @@ export default {
   name: "ar-select",
   mixins: [WidgetMixin],
   props: {
-    value: String,
+    value: {
+      type: String,
+      default: '',
+    },
     property: {
       type: Object,
       default: () => {},
     },
-    required: {
-      type: Array,
-      default: () => [],
-    },
-    formReadOnly: Boolean,
-    omitEmptyFields: Boolean,
+    required: Boolean,    
+    readonly: Boolean,
     hashLevel: Number,
   },
   data() {
@@ -101,5 +100,6 @@ export default {
   border-style: none;
   font-size: 16px;
   line-height: 30px;
+  min-height: 30px;
 }
 </style>
