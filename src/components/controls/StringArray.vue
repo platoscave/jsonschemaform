@@ -72,12 +72,12 @@ export default {
 }
 
 /* Select */
-.ar-control >>> .el-input > input {
+/* .ar-control >>> .el-input > input {
   background-color: #ffffff08;
   border-color: #00adff42;
   font-size: 16px;
   height: 30px;
-}
+} */
 
 /* Fix multiselect */
 .ar-multiple >>>  .el-tag {

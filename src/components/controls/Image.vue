@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="ar-readonly-div" :src="value" />
+    <img :src="value" />
 
     <div v-if="property.contentMediaType === 'image/svg+xml' && !readonly">
       <ar-tiptap

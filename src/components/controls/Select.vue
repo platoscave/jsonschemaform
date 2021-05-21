@@ -91,15 +91,4 @@ export default {
 </script>
 
 <style scoped>
-/* Readonly div */
-.ar-readonly-div {
-  background-color: #ffffff08;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 4px;
-  border-style: none;
-  font-size: 16px;
-  line-height: 30px;
-  min-height: 30px;
-}
 </style>

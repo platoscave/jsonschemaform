@@ -28,7 +28,8 @@
         <template>
           <!-- 
             ar-control-selector is a functional component that that gets replaced by a control depending on 
-            property type. It also hoists property.attrs to higher level so that they can be used as element attributes.
+            property type. 
+            We also transmogrify certain attributes so that they play nicely with control elements.
             - readonly is used by standard input elements to disable input and in css to remove blue border
             - form-read-only and omit-empty-fields are passed in case we're creating a subForm
             - required is used by Select to optionaly add a 'not selected' option
@@ -36,10 +37,11 @@
            -->
           <ar-control-selector
             class="ar-control"
-            :property="property"
-            :value="value ? value[propertyName] : null"
             v-on:input="(newValue) => $set(value, propertyName, newValue)"
+            :property="property"
+            :value="getValue(propertyName, property.type)"
             :readonly="formReadOnly || property.readOnly"
+            :additionalItems="additionalItems"
             :form-read-only="formReadOnly"
             :omit-empty-fields="omitEmptyFields"
             :required="requiredArr.includes(propertyName)"
@@ -157,19 +159,26 @@ export default {
     },
   },
   methods: {
-    onInput(newValue, propertyName) {
-      this.$set(this.value, propertyName, newValue)
-
+    // In the case of object or array and a value is not provided, we must $set an empty value.
+    // Otherwise the update from subForm will fail. This may lead to empty objects and arrays
+    // which we may want to delete afterwards to save some space
+    getValue(propertyName, type) {
+      if (!this.value[propertyName]) {
+        if (type === "object") this.$set(this.value, propertyName, {});
+        if (type === "array") this.$set(this.value, propertyName, []);
+      }
+      return this.value[propertyName];
     },
   },
-  watch: {
+  // Debug helper
+  /* watch: {
     value: {
       handler: function (val) {
         console.log(val);
       },
       deep: true,
     },
-  },
+  }, */
 };
 </script>
 
@@ -183,12 +192,6 @@ export default {
   border-color: #00adff42;
   font-size: 16px;
   height: 30px;
-}
-.ar-control >>> input[readonly] {
-  border-style: none;
-}
-.ar-control >>> .el-input__inner::placeholder {
-  color: #666;
 }
 /* TODO how do we get rid of hover? */
 .Xar-control >>> .el-input__inner:hover {
@@ -207,9 +210,6 @@ label.el-checkbox.ar-control {
   font-size: 16px;
   line-height: 30px;
 }
-label.el-checkbox.ar-control[readonly] {
-  border-style: none;
-}
 
 /* Select 
 .ar-control >>> .el-input > input {
@@ -227,14 +227,39 @@ label.el-checkbox.ar-control[readonly] {
   font-size: 16px;
   line-height: 30px; */
 }
+
+/* Readonly div */
+.ar-control >>> .ar-readonly-div {
+  background-color: #ffffff08;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+  border-style: none;
+  font-size: 16px;
+  line-height: 30px;
+  min-height: 30px;
+}
+
+/* Readonly border style */
+.ar-control >>> input[readonly],
+label.el-checkbox.ar-control[readonly],
 .ar-control >>> .el-textarea__inner[readonly] {
   border-style: none;
 }
-.ar-control >>> .el-textarea__inner::placeholder {
-  color: #666 !important; 
+
+/* Placeholder color */
+.ar-control >>> .el-textarea__inner::placeholder,
+.ar-control >>> .el-input__inner::placeholder {
+  color: #666 !important;
 }
 
-/* info icon */
+/* Charachter counter color*/
+.ar-control >>> .el-input__count-inner,
+.ar-control >>> .el-input__count {
+  color: #666;
+}
+
+/* info icon color*/
 .el-icon-info {
   color: #00adffb3;
 }

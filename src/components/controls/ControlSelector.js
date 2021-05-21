@@ -42,16 +42,16 @@ export default {
       }
 
       // Number
-      else if (property.type === 'number') return 'el-input'
+      else if (property.type === 'number') return 'el-input-number'
 
       // Integer
-      else if (property.type === 'integer') return 'el-input'
+      else if (property.type === 'integer') return 'el-input-number'
 
       // Boolean
       else if (property.type === 'boolean') return 'el-checkbox'
 
       // Object
-      else if (property.type === 'object' && property.properties)  return 'ar-nested-object'
+      else if (property.type === 'object' && property.properties) return 'ar-nested-object'
 
       // Array
       else if (property.type === 'array' && property.items) {
@@ -60,7 +60,7 @@ export default {
         if (property.items.type === 'object' && property.items.properties) return 'ar-object-array'
 
         // multi select
-        else if (property.items.type === 'string')  return 'ar-string-array'
+        else if (property.items.type === 'string') return 'ar-string-array'
 
       }
 
@@ -68,32 +68,50 @@ export default {
       return 'ar-json'
     }
 
-    //context.data.attrs.type = 'textarea'
-    //context.data.attrs.autosize = true
-
     // Merge property attrs with context.data attrs so that control elements can use them
-    let propertyAttrs = context.data.attrs.property.attrs
 
-    let properties = context.data.attrs.property
-    let transMutatedObj = {}
-    for(let propName in properties) {
-      //if(propName === 'minLength') transMutatedObj.minlength = propertyAttrs.minLength
-      if(propName === 'maxLength') transMutatedObj.maxlength = properties.maxLength
-      if(propName === 'minimum') transMutatedObj.min = properties.minimum
-      if(propName === 'maximum') transMutatedObj.max = properties.maximum
-      if(propName === 'multipleOf') transMutatedObj.step = properties.multipleOf
+    // hoist things like placeholder and textarea
+    let schemaAttrs = context.data.attrs.property.attrs
+    Object.assign(context.data.attrs, schemaAttrs)
+
+    // transmogrify certain attributes
+    context.data.props = {}
+    let propertyAttrs = context.data.attrs.property
+
+    if (propertyAttrs.type === 'string') {
+      // note lowercase l
+      if (propertyAttrs.minLength) context.data.attrs.minlength = propertyAttrs.minLength
+      if (propertyAttrs.maxLength) context.data.attrs.maxlength = propertyAttrs.maxLength
+      if(schemaAttrs && schemaAttrs['show-word-limit']) context.data.props['show-word-limit'] = true
     }
 
-    console.log(context.data.attrs.propertyName)
-    console.log(transMutatedObj)
+
+    if (propertyAttrs.type === 'number') {
+      if (propertyAttrs.minimum) context.data.props.min = propertyAttrs.minimum
+      if (propertyAttrs.maximum) context.data.props.max = propertyAttrs.maximum
+      if (propertyAttrs.multipleOf) {
+        // use the exponent of multipleOf to determin precision
+        propertyAttrs.step = propertyAttrs.multipleOf
+        let exp = String(propertyAttrs.multipleOf.toExponential())
+        exp = Number(exp.substr(exp.lastIndexOf('e') + 1))
+        context.data.props.precision = Math.abs(exp) // must be positive int
+      }
+      context.data.props['controls-position'] = 'right'
+      
+    }
 
 
-    let temp = Object.assign(context.data.attrs, propertyAttrs, transMutatedObj)
-    //console.log(temp)
+    if (propertyAttrs.type === 'integer') {
+      if (propertyAttrs.minimum) context.data.props.min = propertyAttrs.minimum
+      if (propertyAttrs.maximum) context.data.props.max = propertyAttrs.maximum
+      context.data.props.precision = 0
+      context.data.props['controls-position'] = 'right'
+    }
+
 
 
     return createElement(
-      getControlName( context.props.property ),
+      getControlName(context.props.property),
       context.data,
       context.children
     )

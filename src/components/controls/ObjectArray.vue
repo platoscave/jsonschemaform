@@ -11,9 +11,9 @@
         :hash-level="hashLevel"
         v-on:input="$emit('input', $event)"
       ></ar-sub-form>
-      <i class="el-icon-close" @click="value.splice(idx, 1)"></i>
+      <i v-if="!readonly && additionalItems" class="el-icon-close" @click="value.splice(idx, 1)"></i>
     </div>
-    <i class="el-icon-plus" @click="value.push({})"></i>
+    <i v-if="!readonly && additionalItems" class="el-icon-plus" @click="value.push({})"></i>
   </div>
 </template>
 
@@ -31,7 +31,8 @@ export default {
       type: Object,
       default: () => {},
     },
-    additionalItems: Boolean,//TODO
+    readonly: Boolean,
+    additionalItems: Boolean, //TODO
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
     hashLevel: Number,
@@ -69,5 +70,8 @@ export default {
   color: #eee;
   z-index: 20;
   border-radius: 50%;
+}
+.ar-subform-background:hover {
+  cursor: pointer;
 }
 </style>

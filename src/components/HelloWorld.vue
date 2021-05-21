@@ -7,6 +7,9 @@
       inactive-text="Read/Write"
     >
     </el-switch>
+    </el-row>
+    <el-row>
+
     <el-switch
       v-model="omitEmptyFields"
       active-text="Omit Empty Fields"
@@ -50,17 +53,11 @@
     <hr />
 
     <h4>dataObj</h4>
-    <highlight-code lang="json" class="highlight-code">{{
-      JSON.stringify(dataObj, null, 4)
-    }}</highlight-code>
+    <highlight-code lang="json" class="highlight-code">{{dataObj}}</highlight-code>
 
     <h4>Schema</h4>
-    <highlight-code lang="json" class="highlight-code">{{
-      JSON.stringify(schema, null, 4)
-    }}</highlight-code>
+    <highlight-code lang="json" class="highlight-code">{{schema}}</highlight-code>
 
-    <h4>State</h4>
-    <pre>{{ state }} </pre>
   </div>
 </template>
 
@@ -120,7 +117,6 @@ export default {
         json:
           '{\n  json: {\n    type: "string",\n    title: "Json",\n    contentMediaType: "application/json",\n  }\n}',
       },
-      state: {},
       valid: false,
       schema: {
         $schema: "http://json-schema.org/draft-04/schema#",
@@ -132,7 +128,7 @@ export default {
           text: {
             type: "string",
             minLength: 6,
-            maxLength: 80,
+            maxLength: 10,
             title: "Full Name",
             attrs: {
               placeholder: "Your Full Name",
@@ -166,14 +162,14 @@ export default {
             type: "number",
             title: "Number Two Decimal",
             minimum: 10,
-            maxmaximum: 100,
+            maximum: 100,
             multipleOf: .01
           },
           integer: {
             type: "integer",
             title: "Integer",
             minimum: 10,
-            maxmaximum: 100,
+            maximum: 100,
           },
           datetime: {
             type: "string",
@@ -240,6 +236,7 @@ export default {
             attrs: {
               type: "textarea",
               placeholder: "How did you hear about us?",
+              'show-word-limit': true
             },
           },
           htmlDoc: {
@@ -296,7 +293,7 @@ export default {
                   type: "date",
                 },
               },
-              subFormObj: {
+              nestedSubFormObj: {
                 title: "Dubble Nested Object",
                 type: "object",
                 properties: {
@@ -335,11 +332,9 @@ export default {
                   },
                 },
               },
-        //required: ["logEntry"],
-            }, 
-            attrs: {
-              draggable: true,
             },
+            required: ["logEntry", "datetime"],
+            additionalItems: true,
           },
         },
         additionalProperties: false,
@@ -375,6 +370,14 @@ export default {
 /* info icon */
 .el-icon-info {
   color: #00adffb3;
+}
+.highlight-code >>> .hljs{
+  background: unset;
+  line-height: 20px;
+  font-size: 14px;
+}
+el-row {
+ margin: 10px;
 }
 </style>
 
