@@ -7,6 +7,7 @@
     labelWidth="150px"
     labelPosition="left"
     size="small"
+    :show-message="!formReadOnly"
   >
     <div v-for="(property, propertyName) in properties" :key="propertyName">
       <!-- Skip form item if omitEmptyFields is true and value is empty -->
@@ -31,21 +32,20 @@
             property type. 
             We also transmogrify certain attributes so that they play nicely with control elements.
             - readonly is used by standard input elements to disable input and in css to remove blue border
-            - form-read-only and omit-empty-fields are passed in case we're creating a subForm
             - required is used by Select to optionaly add a 'not selected' option
             - hash-level is used by a Select with a mongoQuery (to get selectedObjectId from hash)
+            - form-read-only and omit-empty-fields are passed in case we're creating a subForm
            -->
           <ar-control-selector
             class="ar-control"
-            v-on:input="(newValue) => $set(value, propertyName, newValue)"
+            v-on:input="newValue => $set(value, propertyName, newValue)"
             :property="property"
             :value="getValue(propertyName, property.type)"
             :readonly="formReadOnly || property.readOnly"
-            :additionalItems="additionalItems"
-            :form-read-only="formReadOnly"
-            :omit-empty-fields="omitEmptyFields"
             :required="requiredArr.includes(propertyName)"
             :hash-level="hashLevel"
+            :form-read-only="formReadOnly"
+            :omit-empty-fields="omitEmptyFields"
           ></ar-control-selector>
         </template>
       </el-form-item>
@@ -55,30 +55,30 @@
 
 <script>
 /* eslint-disable vue/no-unused-components */
-//import WidgetMixin from "../../lib/widgetMixin";
 import ControlSelector from "./ControlSelector";
-import Enum from "./Enum";
+import StringSelect from "./StringSelect";
 import Form from "./SubForm";
 import Image from "./Image";
 import Json from "./Json";
 import NestedObject from "./NestedObject";
+import Number from "./Number";
 import ObjectArray from "./ObjectArray";
-//import Select from './Select';
+//import StringSelectQuery from './StringSelectQuery';
 import StringArray from "./StringArray";
 import Tiptap from "./TiptapEditor";
 
 export default {
   name: "ar-sub-form",
-  //mixins: [WidgetMixin],
   components: {
     "ar-control-selector": ControlSelector,
-    "ar-enum": Enum,
+    "ar-string-select": StringSelect,
     "ar-sub-form": Form,
     "ar-image": Image,
     "ar-json": Json,
     "ar-nested-object": NestedObject,
+    "ar-number": Number,
     "ar-object-array": ObjectArray,
-    //'ar-select': Select,
+    //'ar-string-select-query': StringSelectQuery,
     "ar-string-array": StringArray,
     "ar-tiptap": Tiptap,
   },
@@ -263,6 +263,7 @@ label.el-checkbox.ar-control[readonly],
 .el-icon-info {
   color: #00adffb3;
 }
+
 </style>
 <style>
 /* Error succes borders: lighter */

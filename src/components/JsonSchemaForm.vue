@@ -33,6 +33,8 @@
       </el-tooltip>
     </h3>
     <h3 v-else-if="schema.title"></h3>
+
+    <!-- The form -->
     <ar-sub-form
       ref="schemaForm"
       class="json-schema-form"
@@ -63,7 +65,7 @@
 
 <script>
 export default {
-  name: "hello-world",
+  name: "ar-json-schema-form",
   data() {
     return {
       readonly: false,
@@ -303,7 +305,7 @@ export default {
                     title: "Favorite Pet",
                   },
                 },
-                //required: ["pet"],
+                required: ["pet"],
               },
             },
           },

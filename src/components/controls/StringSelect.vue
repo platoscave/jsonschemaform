@@ -31,7 +31,7 @@
 
 <script>
 export default {
-  name: "ar-enum",
+  name: "ar-string-select",
   props: {
     value: {
       type: String,
@@ -77,6 +77,7 @@ export default {
 input.el-input__inner {
   background-color: #ffffff08;
   border-color: #00adff42;
+  border-style: solid;
   font-size: 16px;
   height: 30px;
 }

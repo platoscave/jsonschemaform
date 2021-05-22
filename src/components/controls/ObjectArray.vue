@@ -1,19 +1,37 @@
 <template>
   <div>
-    <div v-for="(item, idx) in value" :key="idx" class="ar-subform-background">
+    <!-- Create a subForm for each of the items in the value array -->
+    <div
+      v-for="(item, idx) in value"
+      :key="idx"
+      :class="{
+        'ar-subform-background': true,
+        'not-readonly': !readonly && property.additionalItems,
+      }"
+    >
       <ar-sub-form
-        draggable
+        :draggable="!readonly && property.additionalItems"
         :properties="property.items.properties"
         :value="item"
-        :requiredArr="property.items.required"
+        :requiredArr="property.required"
         :form-read-only="formReadOnly"
         :omit-empty-fields="omitEmptyFields"
         :hash-level="hashLevel"
         v-on:input="$emit('input', $event)"
       ></ar-sub-form>
-      <i v-if="!readonly && additionalItems" class="el-icon-close" @click="value.splice(idx, 1)"></i>
+      <!-- Delete icon -->
+      <i
+        v-if="!readonly && property.additionalItems"
+        class="el-icon-close"
+        @click="value.splice(idx, 1)"
+      ></i>
     </div>
-    <i v-if="!readonly && additionalItems" class="el-icon-plus" @click="value.push({})"></i>
+    <!-- Add icon -->
+    <i
+      v-if="!readonly && property.additionalItems"
+      class="el-icon-plus"
+      @click="value.push({})"
+    ></i>
   </div>
 </template>
 
@@ -32,13 +50,9 @@ export default {
       default: () => {},
     },
     readonly: Boolean,
-    additionalItems: Boolean, //TODO
     formReadOnly: Boolean,
     omitEmptyFields: Boolean,
     hashLevel: Number,
-  },
-  mounted: function () {
-    //debugger;
   },
 };
 </script>
@@ -71,7 +85,7 @@ export default {
   z-index: 20;
   border-radius: 50%;
 }
-.ar-subform-background:hover {
+.not-readonly:hover {
   cursor: pointer;
 }
 </style>

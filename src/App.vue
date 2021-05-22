@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <HelloWorld />
+    <JsonSchemaForm />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import JsonSchemaForm from "./components/JsonSchemaForm.vue";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    JsonSchemaForm,
   },
 };
 </script>

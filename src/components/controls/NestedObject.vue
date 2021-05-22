@@ -1,16 +1,14 @@
 <template>
-  <div>
-      <ar-sub-form
-        class="ar-subform-background"
-        :properties="property.properties"
-        :value="value"
-        :requiredArr="property.required"
-        :form-read-only="formReadOnly"
-        :omit-empty-fields="omitEmptyFields"
-        :hash-level="hashLevel"
-        v-on:input="$emit('input', $event)"
-      ></ar-sub-form>
-  </div>
+  <ar-sub-form
+    class="ar-subform-background"
+    :properties="property.properties"
+    :value="value"
+    :requiredArr="property.required"
+    :form-read-only="formReadOnly"
+    :omit-empty-fields="omitEmptyFields"
+    :hash-level="hashLevel"
+    v-on:input="$emit('input', $event)"
+  ></ar-sub-form>
 </template>
 
 <script>

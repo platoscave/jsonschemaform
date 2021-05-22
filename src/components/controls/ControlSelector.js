@@ -29,10 +29,10 @@ export default {
         }
 
         // Select
-        //else if (property.mongoQuery) return 'ar-select'
+        //else if (property.mongoQuery) return 'ar-string-select-query'
 
         // Enumeration
-        else if (property.enum) return 'ar-enum'
+        else if (property.enum) return 'ar-string-select'
 
         // Date time
         else if (property.format === 'date-time') return 'el-date-picker'
@@ -42,10 +42,10 @@ export default {
       }
 
       // Number
-      else if (property.type === 'number') return 'el-input-number'
+      else if (property.type === 'number') return 'ar-number'
 
       // Integer
-      else if (property.type === 'integer') return 'el-input-number'
+      else if (property.type === 'integer') return 'ar-number'
 
       // Boolean
       else if (property.type === 'boolean') return 'el-checkbox'
@@ -86,7 +86,7 @@ export default {
     }
 
 
-    if (propertyAttrs.type === 'number') {
+/*     if (propertyAttrs.type === 'number') {
       if (propertyAttrs.minimum) context.data.props.min = propertyAttrs.minimum
       if (propertyAttrs.maximum) context.data.props.max = propertyAttrs.maximum
       if (propertyAttrs.multipleOf) {
@@ -97,7 +97,7 @@ export default {
         context.data.props.precision = Math.abs(exp) // must be positive int
       }
       context.data.props['controls-position'] = 'right'
-      
+
     }
 
 
@@ -106,7 +106,7 @@ export default {
       if (propertyAttrs.maximum) context.data.props.max = propertyAttrs.maximum
       context.data.props.precision = 0
       context.data.props['controls-position'] = 'right'
-    }
+    } */
 
 
 
