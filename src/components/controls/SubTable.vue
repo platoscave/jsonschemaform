@@ -1,34 +1,32 @@
 <template>
-  <!-- :model and :rules are needed for validation rules -->
-  <el-form
-    ref="elementUiForm"
-    class="json-schema-form"
-    :model="this.value"
-    :rules="validationRules"
-    labelWidth="150px"
-    labelPosition="left"
-    size="small"
-    :show-message="!formReadOnly"
+  <el-table
+    class="elementUiTable"
+    :data="value"
+    style="width: 100%"
+    highlight-current-row
+    @current-change="
+      (currentRow) =>
+        updateNextLevelHash({ _id: currentRow._id, pageId: currentRow.pageId })
+    "
   >
-    <div v-for="(property, propertyName) in properties" :key="propertyName">
-      <!-- Skip form item if omitEmptyFields is true and value is empty -->
-      <!-- :prop is needed for validation rules -->
-      <el-form-item
-        v-if="!(omitEmptyFields && !value[propertyName])"
-        :label="property.title"
-        :prop="propertyName"
-      >
-        <!-- Label with tooltip. If no description is provided then :label from above is used. -->
-        <span v-if="property.description" slot="label">
-          <span>{{ property.title + " " }}</span>
-          <el-tooltip :content="property.description">
-            <i class="el-icon-info"></i>
-          </el-tooltip>
-        </span>
+    <!-- :prop is needed for validation rules -->
+    <el-table-column
+      v-for="(property, propertyName) in properties"
+      :key="propertyName"
+      :label="property.title"
+      :prop="propertyName"
+    >
+      <!-- Label with tooltip. If no description is provided then :label from above is used. -->
+      <span v-if="property.description" slot="label">
+        <span>{{ property.title + " " }}</span>
+        <el-tooltip :content="property.description">
+          <i class="el-icon-info"></i>
+        </el-tooltip>
+      </span>
 
-        <!-- The control -->
-        <template>
-          <!-- 
+      <!-- The control -->
+      <template slot-scope="scope">
+        <!-- 
             ar-control-selector is a functional component that that gets replaced by a control depending on 
             property type. 
             We also hoist paroperties.attrs so that they play nicely with control elements.
@@ -37,21 +35,20 @@
             - hash-level is used by a Select with a mongoQuery (to get selectedObjectId from hash)
             - form-read-only and omit-empty-fields are passed in case we're creating a subForm
            -->
-          <ar-control-selector
-            class="ar-control"
-            v-on:input="newValue => $set(value, propertyName, newValue)"
-            :property="property"
-            :value="getValue(propertyName, property.type)"
-            :readonly="formReadOnly || property.readOnly"
-            :required="requiredArr.includes(propertyName)"
-            :hash-level="hashLevel"
-            :form-read-only="formReadOnly"
-            :omit-empty-fields="omitEmptyFields"
-          ></ar-control-selector>
-        </template>
-      </el-form-item>
-    </div>
-  </el-form>
+        <ar-control-selector
+          class="ar-control"
+          v-on:input="(newValue) => $set(scope.row, propertyName, newValue)"
+          :property="property"
+          :value="getValue(scope.row, propertyName, property.type)"
+          :readonly="formReadOnly || property.readOnly"
+          :required="requiredArr.includes(propertyName)"
+          :hash-level="hashLevel"
+          :form-read-only="formReadOnly"
+          :omit-empty-fields="omitEmptyFields"
+        ></ar-control-selector>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
@@ -69,7 +66,7 @@ import SelectArray from "./SelectArray";
 import Tiptap from "./TiptapEditor";
 
 export default {
-  name: "ar-sub-form",
+  name: "ar-sub-table",
   components: {
     "ar-control-selector": ControlSelector,
     "ar-select-string": SelectString,
@@ -85,7 +82,7 @@ export default {
   },
   props: {
     value: {
-      type: Object,
+      type: Array,
       default: () => {},
     },
     properties: {
@@ -163,19 +160,19 @@ export default {
     // In the case of object or array and a value is not provided, we must $set an empty value.
     // Otherwise the update from subForm will fail. This may lead to empty objects and arrays
     // which we may want to delete afterwards to save some space
-    getValue(propertyName, type) {
-      if (!this.value[propertyName]) {
-        if (type === "object") this.$set(this.value, propertyName, {});
-        if (type === "array") this.$set(this.value, propertyName, []);
+    getValue(row, propertyName, type) {
+      if (!row[propertyName]) {
+        if (type === "object") this.$set(row, propertyName, {});
+        if (type === "array") this.$set(row, propertyName, []);
       }
-      return this.value[propertyName];
+      return row[propertyName];
     },
 
     validate() {
-      return this.$refs['elementUiForm'].validate()
+      return this.$refs["elementUiTable"].validate();
     },
     resetFields() {
-      this.$refs['elementUiForm'].resetFields();
+      this.$refs["elementUiTable"].resetFields();
     },
   },
   // Debug helper
@@ -191,9 +188,7 @@ export default {
 </script>
 
 <style scoped>
-.json-schema-form {
-  max-width: 750px;
-}
+
 /* Input Control */
 .ar-control >>> input {
   background-color: #ffffff08;
@@ -287,4 +282,17 @@ label.el-checkbox.ar-control[readonly],
 .el-form-item.is-success .el-textarea__inner:focus {
   border-color: #67c23a88;
 }
+</style>
+<style>
+.el-table__body tr > td{
+  padding: 3px;
+  vertical-align: top;
+}
+.el-table .cell {
+  padding: 3px;
+}
+.el-table th{
+  padding: 0 0 0 16px;
+}
+
 </style>

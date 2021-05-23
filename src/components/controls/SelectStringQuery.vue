@@ -33,7 +33,7 @@ import { PoucdbServices } from "../../../dataServices/pouchdbServices.js";
 import WidgetMixin from "../../../lib/widgetMixin";
 
 export default {
-  name: "ar-string-select-query",
+  name: "ar-select-string-query",
   mixins: [WidgetMixin],
   props: {
     value: {

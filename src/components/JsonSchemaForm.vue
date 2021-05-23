@@ -1,26 +1,25 @@
 <template>
   <div>
     <el-row>
-    <el-switch
-      v-model="readonly"
-      active-text="ReadOnly"
-      inactive-text="Read/Write"
-    >
-    </el-switch>
+      <el-switch
+        v-model="readonly"
+        active-text="ReadOnly"
+        inactive-text="Read/Write"
+      >
+      </el-switch>
     </el-row>
     <el-row>
-
-    <el-switch
-      v-model="omitEmptyFields"
-      active-text="Omit Empty Fields"
-      inactive-text="Include Empty Fields"
-      :disabled="!this.readonly"
-    >
-    </el-switch>
+      <el-switch
+        v-model="omitEmptyFields"
+        active-text="Omit Empty Fields"
+        inactive-text="Include Empty Fields"
+        :disabled="!this.readonly"
+      >
+      </el-switch>
     </el-row>
     <el-row>
-    <button type="primary" plain @click="validateForm()">Validate</button>
-    <button type="primary" plain @click="resetForm()">Reset</button>
+      <button type="primary" plain @click="validateForm()">Validate</button>
+      <button type="primary" plain @click="resetForm()">Reset</button>
     </el-row>
     <div>Valid: {{ valid }}</div>
 
@@ -45,9 +44,8 @@
       :omit-empty-fields="omitEmptyFields"
       :hash-level="0"
       v-on:change="onChange"
-      
     >
-    <!-- 
+      <!-- 
       @:input="value => alert(value)"
 
      -->
@@ -55,11 +53,14 @@
     <hr />
 
     <h4>dataObj</h4>
-    <highlight-code lang="json" class="highlight-code">{{dataObj}}</highlight-code>
+    <highlight-code lang="json" class="highlight-code">{{
+      dataObj
+    }}</highlight-code>
 
     <h4>Schema</h4>
-    <highlight-code lang="json" class="highlight-code">{{schema}}</highlight-code>
-
+    <highlight-code lang="json" class="highlight-code">{{
+      schema
+    }}</highlight-code>
   </div>
 </template>
 
@@ -165,7 +166,7 @@ export default {
             title: "Number Two Decimal",
             minimum: 10,
             maximum: 100,
-            multipleOf: .01
+            multipleOf: 0.01,
           },
           integer: {
             type: "integer",
@@ -238,7 +239,7 @@ export default {
             attrs: {
               type: "textarea",
               placeholder: "How did you hear about us?",
-              'show-word-limit': true
+              "show-word-limit": true,
             },
           },
           htmlDoc: {
@@ -368,18 +369,17 @@ export default {
 </script>
 
 <style scoped>
-
 /* info icon */
 .el-icon-info {
   color: #00adffb3;
 }
-.highlight-code >>> .hljs{
+.highlight-code >>> .hljs {
   background: unset;
   line-height: 20px;
   font-size: 14px;
 }
 el-row {
- margin: 10px;
+  margin: 10px;
 }
 </style>
 

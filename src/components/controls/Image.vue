@@ -5,7 +5,7 @@
     <div v-if="property.contentMediaType === 'image/svg+xml' && !readonly">
       <ar-tiptap
         v-on:input="$emit('input', $event)"
-        :value="svgMarkup"
+        :value="'<pre><code>' + svgMarkup + '</code></pre>'"
       ></ar-tiptap>
     </div>
   </div>
@@ -44,7 +44,10 @@ export default {
         });
       };
       if (this.property.contentEncoding === "base64") {
-        return "<pre><code>" + escapeHtml(this.value) + "</code></pre>";
+        const sub = this.value.slice(26) // remove data:image/svg+xml;base64,
+        const markup = window.atob(sub)
+        console.log(markup)
+        return markup
       }
       return "<pre><code>" + escapeHtml(this.value) + "</code></pre>";
     },

@@ -26,6 +26,9 @@ export default {
     },
     readonly: Boolean,
   },
+  mounted() {
+    console.log(this.value)
+  }
 };
 </script>
 

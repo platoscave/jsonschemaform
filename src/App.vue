@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <JsonSchemaForm />
+    <JsonSchemaTable />
   </div>
 </template>
 
 <script>
 import JsonSchemaForm from "./components/JsonSchemaForm.vue";
+import JsonSchemaTable from "./components/JsonSchemaTable.vue";
 
 export default {
   name: "App",
   components: {
     JsonSchemaForm,
+    JsonSchemaTable
   },
 };
 </script>

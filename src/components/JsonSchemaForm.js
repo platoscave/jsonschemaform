@@ -131,7 +131,7 @@ export default {
 
         // multi select
         else if (property.items.type === 'string' && property.items.enum) {
-          return this.createStringArrayElements(createElement, property, elementProps, controlData, dataObj, propertyName)
+          return this.createSelectArrayElements(createElement, property, elementProps, controlData, dataObj, propertyName)
         }
 
         else return [createElement('div', 'Unknown array type: ' + property.items.type)]
@@ -551,7 +551,7 @@ export default {
     //
     // Array containing strings
     //
-    createStringArrayElements(createElement, property, elementProps, controlData, dataObj, propertyName) {
+    createSelectArrayElements(createElement, property, elementProps, controlData, dataObj, propertyName) {
 
       if (this.formReadOnly || property.readonly) { // readonly
 

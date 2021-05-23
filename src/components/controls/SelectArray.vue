@@ -1,26 +1,23 @@
 <template>
-  <div
-    v-if="readonly || property.enum.length < 2"
-    class="ar-readonly-div"
-  >
-    {{value}}
+  <div v-if="readonly" class="ar-readonly-div">
+    {{ value.join(", ") }}
   </div>
 
-  <el-radio-group
-    v-else-if="property.enum.length < 5"
+  <el-checkbox-group
+    v-else-if="property.items.enum.length < 5"
     v-on:input="$emit('input', $event)"
     :value="value"
   >
-    <el-radio
-      v-for="item in property.enum"
+    <el-checkbox
+      v-for="item in property.items.enum"
       :key="item"
       :label="item"
       :value="item"
-    ></el-radio>
-  </el-radio-group>
-  <el-select v-else v-on:input="$emit('input', $event)" :value="value">
+    ></el-checkbox>
+  </el-checkbox-group>
+  <el-select class="ar-multiple" v-else v-on:input="$emit('input', $event)" :value="value" multiple>
     <el-option
-      v-for="item in property.enum"
+      v-for="item in property.items.enum"
       :key="item"
       :label="item"
       :value="item"
@@ -31,16 +28,17 @@
 
 <script>
 export default {
-  name: "ar-string-select",
+  name: "ar-select-array",
   props: {
     value: {
-      type: String,
-      default: '',
+      type: Array,
+      default: () => [],
     },
     property: {
       type: Object,
       default: () => {},
     },
+    required: Boolean,
     readonly: Boolean,
   },
 };
@@ -60,8 +58,8 @@ export default {
   min-height: 30px;
 }
 
-/* Radiobuttons */
-.el-radio-group {
+/* checkbox background*/
+.el-checkbox-group {
   background-color: #ffffff08;
   padding-left: 10px;
   padding-right: 10px;
@@ -74,11 +72,22 @@ export default {
 }
 
 /* Select */
-input.el-input__inner {
+/* .ar-control >>> .el-input > input {
   background-color: #ffffff08;
   border-color: #00adff42;
-  border-style: solid;
   font-size: 16px;
   height: 30px;
+} */
+
+/* Fix multiselect */
+.ar-multiple >>>  .el-tag {
+  background-color: #ffffff08;
+}
+.ar-multiple >>> .el-select__tags-text {
+  color: #00adff;
+}
+.ar-multiple >>> .el-icon-close {
+  background-color: #ff4000a3;
+  color: #eee
 }
 </style>
