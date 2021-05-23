@@ -86,6 +86,15 @@ export default {
             logEntry: "Second entry",
           },
         ],
+        subTableArr: [
+          {
+            logEntry: "First entry",
+            datetime: "2021-01-21T23:00:00.000Z",
+          },
+          {
+            logEntry: "Second entry",
+          },
+        ],
         htmlDoc:
           '<h3>HTML stored as string</h3><p>The table editor is still a bit quirky. Tiptap version 2 is said to improve on this. Watch this spot.</p><table><tbody><tr><td data-colwidth="61"><p></p></td><td data-colwidth="79"><p>A</p></td><td data-colwidth="25"><p>B</p></td></tr><tr><td data-colwidth="61"><p>R1</p></td><td data-colwidth="79"><p>R1A</p></td><td data-colwidth="25"><p>R1B</p></td></tr><tr><td data-colwidth="61"><p>R2</p></td><td data-colwidth="79"><p>R2A</p></td><td data-colwidth="25"><p>R2B</p></td></tr></tbody></table>',
         htmlDoc2: {
@@ -313,6 +322,36 @@ export default {
           subFormArr: {
             title: "Array of Objects",
             type: "array",
+            items: {
+              type: "object",
+              properties: {
+                datetime: {
+                  type: "string",
+                  format: "date-time",
+                  title: "Timestamp",
+                  default: "now",
+                  attrs: {
+                    type: "datetime",
+                  },
+                },
+                logEntry: {
+                  type: "string",
+                  maxLength: 500,
+                  title: "Log",
+                  attrs: {
+                    type: "textarea",
+                    placeholder: "What happend?",
+                  },
+                },
+              },
+            },
+            required: ["logEntry", "datetime"],
+            additionalItems: true,
+          },
+          subTableArr: {
+            title: "Table",
+            type: "array",
+            displayAs: "Table",
             items: {
               type: "object",
               properties: {

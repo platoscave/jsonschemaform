@@ -53,8 +53,15 @@ export default {
       // Array
       else if (property.type === 'array' && property.items) {
 
-        // objects in a subform
-        if (property.items.type === 'object' && property.items.properties) return 'ar-object-array'
+        // objects
+        if (property.items.type === 'object' && property.items.properties){
+
+          // objects in a subform
+          if (property.displayAs === 'Table') return 'ar-table-array'
+          // objects in a table
+          else return 'ar-form-array'
+
+        }
 
         // multi select
         else if (property.items.type === 'string') return 'ar-select-array'

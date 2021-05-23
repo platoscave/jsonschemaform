@@ -39,7 +39,7 @@
 //import Form from "./SubForm"; // must be declared globally
 
 export default {
-  name: "ar-object-array",
+  name: "ar-form-array",
   props: {
     value: {
       type: Array,

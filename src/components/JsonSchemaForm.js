@@ -126,7 +126,7 @@ export default {
 
         // objects in a subform
         if (property.items.type === 'object' && property.items.properties) {
-          return this.createObjectArrayElements(createElement, property.items.properties, dataObj, propertyName, generateSubform)
+          return this.createFormArrayElements(createElement, property.items.properties, dataObj, propertyName, generateSubform)
         }
 
         // multi select
@@ -628,7 +628,7 @@ export default {
     //
     // Array
     //
-    createObjectArrayElements(createElement, properties, dataObj, propertyName, generateSubform) {
+    createFormArrayElements(createElement, properties, dataObj, propertyName, generateSubform) {
       const property = properties[propertyName]
       let elementsArr = []
 

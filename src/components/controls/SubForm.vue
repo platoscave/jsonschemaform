@@ -63,7 +63,8 @@ import Image from "./Image";
 import Json from "./Json";
 import NestedObject from "./NestedObject";
 import Number from "./Number";
-import ObjectArray from "./ObjectArray";
+import FormArray from "./FormArray";
+import TableArray from "./TableArray";
 //import SelectStringQuery from './SelectStringQuery';
 import SelectArray from "./SelectArray";
 import Tiptap from "./TiptapEditor";
@@ -78,7 +79,8 @@ export default {
     "ar-json": Json,
     "ar-nested-object": NestedObject,
     "ar-number": Number,
-    "ar-object-array": ObjectArray,
+    "ar-form-array": FormArray,
+    "ar-table-array": TableArray,
     //'ar-select-string-query': SelectStringQuery,
     "ar-select-array": SelectArray,
     "ar-tiptap": Tiptap,
