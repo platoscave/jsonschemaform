@@ -13,6 +13,11 @@ import json from 'highlight.js/lib/languages/json';
 import xml from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/vs2015.css';
 
+// Defined galobaly due to their recusive nature
+import SubForm from './components/controls/SubForm';
+Vue.component('ar-sub-form', SubForm)
+import SubTable from './components/controls/SubTable';
+Vue.component('ar-sub-table', SubTable)
 
 Vue.use( ElementUI, { locale })
 /*

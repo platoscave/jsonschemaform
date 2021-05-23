@@ -1,74 +1,92 @@
 <template>
   <div>
     <el-row>
-    <el-switch
-      v-model="readonly"
-      active-text="ReadOnly"
-      inactive-text="Read/Write"
-    >
-    </el-switch>
-    <el-switch
-      v-model="omitEmptyFields"
-      active-text="Omit Empty Fields"
-      inactive-text="Include Empty Fields"
-      :disabled="!this.readonly"
-    >
-    </el-switch>
+      <el-switch
+        v-model="readonly"
+        active-text="ReadOnly"
+        inactive-text="Read/Write"
+      >
+      </el-switch>
     </el-row>
     <el-row>
-    <button type="primary" plain @click="validateForm()">Validate</button>
-    <button type="primary" plain @click="resetForm()">Reset</button>
+      <el-switch
+        v-model="omitEmptyFields"
+        active-text="Omit Empty Fields"
+        inactive-text="Include Empty Fields"
+        :disabled="!this.readonly"
+      >
+      </el-switch>
+    </el-row>
+    <el-row>
+      <button type="primary" plain @click="validateForm()">Validate</button>
+      <button type="primary" plain @click="resetForm()">Reset</button>
     </el-row>
     <div>Valid: {{ valid }}</div>
 
     <hr />
-    <json-schema-form
+    <!-- Form header with tooltip -->
+    <h3 v-if="schema.title && schema.description">
+      <span>{{ schema.title + " " }}</span>
+      <el-tooltip :content="schema.description">
+        <i class="el-icon-info"></i>
+      </el-tooltip>
+    </h3>
+    <h3 v-else-if="schema.title"></h3>
+
+    <!-- The form -->
+    <ar-sub-form
       ref="schemaForm"
       class="json-schema-form"
       v-model="dataObj"
-      :schema="schema"
+      :properties="schema.properties"
+      :requiredArr="schema.required"
       :form-read-only="readonly"
       :omit-empty-fields="omitEmptyFields"
+      :hash-level="0"
       v-on:change="onChange"
     >
-    </json-schema-form>
+      <!-- 
+      @:input="value => alert(value)"
+
+     -->
+    </ar-sub-form>
     <hr />
 
     <h4>dataObj</h4>
     <highlight-code lang="json" class="highlight-code">{{
-      JSON.stringify(dataObj, null, 4)
+      dataObj
     }}</highlight-code>
 
     <h4>Schema</h4>
     <highlight-code lang="json" class="highlight-code">{{
-      JSON.stringify(schema, null, 4)
+      schema
     }}</highlight-code>
-
-    <h4>State</h4>
-    <pre>{{ state }} </pre>
   </div>
 </template>
 
 <script>
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-useless-escape */
-import JsonSchemaForm from './JsonSchemaForm';
-
 export default {
-  name: "hello-world",
-  components: {
-    'json-schema-form': JsonSchemaForm
-  },
+  name: "ar-json-schema-form",
   data() {
     return {
       readonly: false,
       omitEmptyFields: false,
       dataObj: {
+        text: "a",
         textarea: "Through the\ngrapevine.",
         enum: "Promotion",
         multiSelect: ["Promotion", "Weekly News"],
         multiSelect2: ["Promotion", "Weekly News"],
         subFormArr: [
+          {
+            logEntry: "First entry",
+            datetime: "2021-01-21T23:00:00.000Z",
+          },
+          {
+            logEntry: "Second entry",
+          },
+        ],
+        subTableArr: [
           {
             logEntry: "First entry",
             datetime: "2021-01-21T23:00:00.000Z",
@@ -111,7 +129,6 @@ export default {
         json:
           '{\n  json: {\n    type: "string",\n    title: "Json",\n    contentMediaType: "application/json",\n  }\n}',
       },
-      state: {},
       valid: false,
       schema: {
         $schema: "http://json-schema.org/draft-04/schema#",
@@ -123,7 +140,7 @@ export default {
           text: {
             type: "string",
             minLength: 6,
-            maxLength: 80,
+            maxLength: 10,
             title: "Full Name",
             attrs: {
               placeholder: "Your Full Name",
@@ -155,10 +172,16 @@ export default {
           },
           number: {
             type: "number",
-            title: "Number",
+            title: "Number Two Decimal",
             minimum: 10,
-            maxmaximum: 100,
-            precision: 2,
+            maximum: 100,
+            multipleOf: 0.01,
+          },
+          integer: {
+            type: "integer",
+            title: "Integer",
+            minimum: 10,
+            maximum: 100,
           },
           datetime: {
             type: "string",
@@ -225,6 +248,7 @@ export default {
             attrs: {
               type: "textarea",
               placeholder: "How did you hear about us?",
+              "show-word-limit": true,
             },
           },
           htmlDoc: {
@@ -281,7 +305,7 @@ export default {
                   type: "date",
                 },
               },
-              subFormObj: {
+              nestedSubFormObj: {
                 title: "Dubble Nested Object",
                 type: "object",
                 properties: {
@@ -291,7 +315,7 @@ export default {
                     title: "Favorite Pet",
                   },
                 },
-                //required: ["pet"],
+                required: ["pet"],
               },
             },
           },
@@ -320,11 +344,39 @@ export default {
                   },
                 },
               },
-        //required: ["logEntry"],
             },
-            attrs: {
-              draggable: true,
+            required: ["logEntry", "datetime"],
+            additionalItems: true,
+          },
+          subTableArr: {
+            title: "Table",
+            type: "array",
+            displayAs: "Table",
+            items: {
+              type: "object",
+              properties: {
+                datetime: {
+                  type: "string",
+                  format: "date-time",
+                  title: "Timestamp",
+                  default: "now",
+                  attrs: {
+                    type: "datetime",
+                  },
+                },
+                logEntry: {
+                  type: "string",
+                  maxLength: 500,
+                  title: "Log",
+                  attrs: {
+                    type: "textarea",
+                    placeholder: "What happend?",
+                  },
+                },
+              },
             },
+            required: ["logEntry", "datetime"],
+            additionalItems: true,
           },
         },
         additionalProperties: false,
@@ -355,103 +407,18 @@ export default {
 };
 </script>
 
-
 <style scoped>
-pre {
-  text-align: left;
-}
-.json-schema-form {
-  max-width: 750px;
-}
-/* doesnt work */
-.highlight-code >>> code.hljs .json{
-  background: inherit;
-}
-.json-schema-form >>> .control-background {
-  background-color: #ffffff08;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 4px;
-  border-color: #00adff66;
-  border-style: solid;
-  border-width: 1px;
-  min-height: 30px;
-}
-.json-schema-form >>> .subform-background {
-  background-color: #ffffff08;
-  padding: 10px;
-  min-height: 30px;
-  border-radius: 4px;
-}
-.json-schema-form >>> .el-form-item--small.el-form-item:last-child {
-  margin-bottom: 0px;
-}
-.json-schema-form >>> .el-icon-info {
+/* info icon */
+.el-icon-info {
   color: #00adffb3;
 }
-.json-schema-form >>> .el-input__inner {
-  background-color: #ffffff08;
-  border-color: #00adff66;
+.highlight-code >>> .hljs {
+  background: unset;
+  line-height: 20px;
+  font-size: 14px;
 }
-.json-schema-form >>> .el-textarea__inner {
-  background-color: #ffffff08;
-  border-color: #00adff66;
-}
-.json-schema-form >>> .el-select.el-select--small {
-  border-radius: 4px;
-  border-color: #00adff66;
-  border-style: solid;
-  border-width: 1px;
-}
-.json-schema-form >>> .el-tag {
-  background-color: #ffffff08;
-}
-.json-schema-form >>> .el-select__tags-text {
-  color: #00adff;
-}
-.json-schema-form >>> .el-input__inner::placeholder {
-  color: #00adff66;
-}
-.json-schema-form >>> input[readonly] {
-  border-width: 0px;
-}
-.json-schema-form >>> textarea[readonly] {
-  border-width: 0px;
-}
-.json-schema-form >>> div[readonly] {
-  border-width: 0px;
-}
-.json-schema-form >>> p {
-  line-height: 24px;
-}
-.json-schema-form >>> h1 {
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
-}
-.json-schema-form >>> h2 {
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
-}
-.json-schema-form >>> h3 {
-  margin-block-start: 0.5em;
-  margin-block-end: 0.5em;
-}
-
-/* For the array of objects */
-.json-schema-form >>> .subform-margin-bottom {
-  margin-bottom: 10px;
-}
-.json-schema-form >>> .selected {
-  border-color: #eee;
-  border-style: solid;
-  border-width: 1px;
-}
-.json-schema-form >>> .subform-margin-bottom:hover {
-  cursor: pointer;
-}
-.json-schema-form >>> .drop-separator {
-  background-color: #00adff66;
-  height: 1px;
-  border: none;
+el-row {
+  margin: 10px;
 }
 </style>
+
