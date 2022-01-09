@@ -1,4 +1,7 @@
 ### jsonschema-2-elementui-form
+
+Currently not maintained. Will be replaced with a modenized version in a few months.
+
 A Vue.js component that takes a jsonschema and generates an element-ui form.
 
 Features:
@@ -18,7 +21,6 @@ Note that in our demo:
 - we've included a dark theme and a bunch of styling
 
 
-[Live Demo](https://platoscave.github.io/macroeconomy/)
 
 Screenshots:
 
